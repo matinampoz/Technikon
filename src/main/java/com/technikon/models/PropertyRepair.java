@@ -3,6 +3,7 @@ package com.technikon.models;
 import enums.RepairStatus;
 import enums.RepairType;
 import java.time.LocalDateTime;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +15,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PropertyRepair {
 
-    private int repairId;
-    private int ownerId;
-    private int propertyId;
+    @Id
+    private long repairId;
+    private long ownerId;
+    private long propertyId;
     private RepairType typeOfRepair;
     private String shortDescription;
     private LocalDateTime submissionDate;
