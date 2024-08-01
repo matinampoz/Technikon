@@ -1,15 +1,13 @@
 package com.technikon.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,12 +15,30 @@ import javax.persistence.Table;
 @Table(name = "property_owner")
 public class PropertyOwner {
     @Id
+    @Column(name = "vatNumber")
     private long vatNumber;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "phoneNumber")
     private long phoneNumber;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "propertyOwner")
+    List<Property> properties;
 }

@@ -33,5 +33,5 @@ public class Property {
     
     @ManyToOne
     @JoinColumn(name = "VATnumber", referencedColumnName = "VATnumber")
-    private long ownerVAT;
+    private PropertyOwner propertyOwner;
 }
