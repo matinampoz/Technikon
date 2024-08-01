@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.technikon.repositories;
 
 import com.technikon.models.PropertyRepair;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
-/**
- *
- * @author zouka
- */
 public class PropertyRepairRepository implements Repository<PropertyRepair, Long> {
 
     private final EntityManager entityManager;
@@ -23,21 +17,60 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
 
     @Override
     public Optional<PropertyRepair> findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            entityManager.getTransaction().begin();
+            PropertyRepair t = entityManager.find(getEntityClass(), id);
+            entityManager.getTransaction().commit();
+            return Optional.of(t);
+        } catch (Exception e) {
+            //log.debug("An exception occured");
+        }
+        return Optional.empty();
     }
 
     @Override
     public List<PropertyRepair> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        TypedQuery<PropertyRepair> query = entityManager.createQuery("from " + getEntityClassName(), getEntityClass());
+        return query.getResultList();
     }
 
     @Override
     public Optional<PropertyRepair> save(PropertyRepair t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(t);
+            entityManager.getTransaction().commit();
+            return Optional.of(t);
+        } catch (Exception e) {
+            // log.debug("An exception occured");
+        }
+        return Optional.empty();
     }
 
     @Override
     public boolean deleteById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PropertyRepair persistentInstance = entityManager.find(getEntityClass(), id);
+        if (persistentInstance != null) {
+
+            try {
+                entityManager.getTransaction().begin();
+                entityManager.remove(persistentInstance);
+                entityManager.getTransaction().commit();
+            } catch (Exception e) {
+                //log.debug("An exception occured");
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
+
+    private Class<PropertyRepair> getEntityClass() {
+        return PropertyRepair.class;
+    }
+
+    private String getEntityClassName() {
+        return PropertyRepair.class.getName();
+    }
+
 }
