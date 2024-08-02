@@ -15,6 +15,9 @@ import java.util.List;
 @Table(name = "property_owner")
 public class PropertyOwner {
     @Id
+    @Column(name = "id")
+    private long id;
+
     @Column(name = "vatNumber")
     private long vatNumber;
 
