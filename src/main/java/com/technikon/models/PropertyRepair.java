@@ -3,9 +3,8 @@ package com.technikon.models;
 import enums.RepairStatus;
 import enums.RepairType;
 import java.time.LocalDateTime;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,13 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class PropertyRepair {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long repairId;
     
     @ManyToOne
-    @JoinColumn(name = "VATnumber", referencedColumnName = "VATnumber")
+    @JoinColumn(name = "vatNumber", referencedColumnName = "vatNumber")
     private PropertyOwner owner;
     
     @ManyToOne

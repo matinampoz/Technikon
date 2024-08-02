@@ -7,18 +7,20 @@ import com.technikon.repositories.PropertyRepairRepository;
 import com.technikon.repositories.PropertyRepository;
 import enums.PropertyType;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 public class Main {
 
     public static void main(String[] args) {
         // log.info("CRM application starting...");
 
-        EntityManager em = JpaUtil.getEntityManager();
+        /*EntityManager em = JpaUtil.getEntityManager();
 
         OwnerRepository ownerRepository = new OwnerRepository(em);
         PropertyRepository propertyRepository = new PropertyRepository(em);
-        PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepository(em);
+        PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepository(em);*/
 
         //  Property property = Property.builder()
         //          .propertyID(1L)
@@ -55,7 +57,11 @@ public class Main {
         //  OwnerService ownerService = new OwnerServiceImpl(ownerRepository);
         //PropertyService propertyService = new PropertyServiceImpl(propertyRepository);
         // PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(propertyRepairRepository);
-        em.close();
+       // em.close();
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PERSISTENCE");
+        EntityManager em = emf.createEntityManager();
+        emf.close();
 
         System.out.println("Hello");
     }
