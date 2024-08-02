@@ -4,6 +4,8 @@ import enums.RepairStatus;
 import enums.RepairType;
 import java.time.LocalDateTime;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +19,15 @@ public class PropertyRepair {
 
     @Id
     private long repairId;
-    private long ownerId;
-    private long propertyId;
+    
+    @ManyToOne
+    @JoinColumn(name = "VATnumber", referencedColumnName = "VATnumber")
+    private PropertyOwner owner;
+    
+    @ManyToOne
+    @JoinColumn(name = "propertyId", referencedColumnName = "propertyId")
+    private Property property;
+    
     private RepairType typeOfRepair;
     private String shortDescription;
     private LocalDateTime submissionDate;
