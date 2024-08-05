@@ -2,6 +2,7 @@ package com.technikon.services;
 
 import com.technikon.models.PropertyOwner;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface OwnerService {
@@ -17,4 +18,6 @@ public interface OwnerService {
     Optional<PropertyOwner> searchOwnerById(String id);
 
     Boolean deleteOwner(String id);
+
+    List<PropertyOwner> getAllOwners();
 }

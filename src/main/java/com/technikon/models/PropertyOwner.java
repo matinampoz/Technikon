@@ -28,4 +28,5 @@ public class PropertyOwner {
 
     @OneToMany(mappedBy = "propertyOwner")
     List<Property> properties;
+
 }

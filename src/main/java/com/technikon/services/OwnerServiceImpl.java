@@ -1,6 +1,7 @@
 package com.technikon.services;
 
 import com.technikon.models.PropertyOwner;
+import com.technikon.models.PropertyRepair;
 import com.technikon.repositories.OwnerRepository;
 
 import java.util.List;
@@ -33,6 +34,11 @@ public class OwnerServiceImpl implements OwnerService{
     public Long saveOwner(PropertyOwner propertyowner) {
         ownerRepository.save(propertyowner);
         return propertyowner.getOwnerId();
+    }
+
+    @Override
+    public List<PropertyOwner> getAllOwners() {
+        return ownerRepository.findAll();
     }
 
     @Override
