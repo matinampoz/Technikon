@@ -1,6 +1,8 @@
 package com.technikon.repositories;
 
+import com.technikon.exceptions.PropertyRepairException;
 import com.technikon.models.PropertyRepair;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -29,8 +31,12 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
 
     @Override
     public List<PropertyRepair> findAll() {
-        TypedQuery<PropertyRepair> query = entityManager.createQuery("from " + getEntityClassName(), getEntityClass());
-        return query.getResultList();
+        try {
+            TypedQuery<PropertyRepair> query = entityManager.createQuery("from " + getEntityClassName(), getEntityClass());
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PropertyRepairException("Failed to find all PropertyRepairs", e);
+        }
     }
 
     @Override
@@ -41,9 +47,10 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
             entityManager.getTransaction().commit();
             return Optional.of(t);
         } catch (Exception e) {
-            // log.debug("An exception occured");
+            entityManager.getTransaction().rollback();
+            throw new PropertyRepairException("Failed to save PropertyRepair", e);
         }
-        return Optional.empty();
+        //return Optional.empty();
     }
 
     @Override
@@ -56,12 +63,36 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
                 entityManager.remove(persistentInstance);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
-                //log.debug("An exception occured");
-                return false;
+                entityManager.getTransaction().rollback();
+                throw new PropertyRepairException("Failed to delete PropertyRepair with id: " + id, e);
+                //return false;
             }
-            return true;
+            //return true;
         }
         return false;
+    }
+
+    public List<PropertyRepair> findBySubmissionDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        try {
+            TypedQuery<PropertyRepair> query = entityManager.createQuery(
+                    "SELECT r FROM PropertyRepair r WHERE r.submissionDate BETWEEN :startDate AND :endDate", PropertyRepair.class);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PropertyRepairException("Failed to find PropertyRepairs between dates", e);
+        }
+    }
+
+    public List<PropertyRepair> findByOwner_Id(Long ownerId) {
+        try {
+            TypedQuery<PropertyRepair> query = entityManager.createQuery(
+                    "SELECT r FROM PropertyRepair r WHERE r.owner.id = :ownerId", PropertyRepair.class);
+            query.setParameter("ownerId", ownerId);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PropertyRepairException("Failed to find PropertyRepairs by owner id: " + ownerId, e);
+        }
     }
 
     private Class<PropertyRepair> getEntityClass() {
