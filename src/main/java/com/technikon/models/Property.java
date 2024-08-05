@@ -37,7 +37,7 @@ public class Property {
     private PropertyType typeOfProperty;
     
     @ManyToOne
-    @JoinColumn(name = "VATnumber", referencedColumnName = "VATnumber")
+    @JoinColumn(name = "vatNumber", referencedColumnName = "vatNumber")
     private PropertyOwner propertyOwner;
     
     @OneToMany(mappedBy = "property")
