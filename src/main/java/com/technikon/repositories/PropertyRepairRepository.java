@@ -1,4 +1,3 @@
-
 package com.technikon.repositories;
 
 import com.technikon.models.PropertyRepair;
