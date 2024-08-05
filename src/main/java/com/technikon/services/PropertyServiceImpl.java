@@ -3,8 +3,8 @@ package com.technikon.services;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
 import com.technikon.repositories.PropertyRepository;
+import enums.PropertyType;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -15,16 +15,16 @@ public class PropertyServiceImpl implements PropertyService {
     private final PropertyRepository propertyRepository;
     
     @Override
-    //TODO: implement with UI
-    public Property createProperty() {
+    public Property createProperty(String e9, String address, int yearOfConstruction, PropertyType typeOfProperty, PropertyOwner owner) {
         
         Property createdProperty = new Property();
-
-        /*call UI*/
-        createdProperty.setE9("123456");
-        createdProperty.setAddress("KP 33");
-        createdProperty.setYearOfConstruction(2006);
-        createdProperty.setPropertyOwner(new PropertyOwner());
+        createdProperty.builder()
+                .e9(e9)
+                .address(address)
+                .yearOfConstruction(yearOfConstruction)
+                .typeOfProperty(typeOfProperty)
+                .propertyOwner(owner)
+                .build();
         
         return createdProperty;
     }

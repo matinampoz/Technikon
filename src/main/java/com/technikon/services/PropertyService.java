@@ -1,16 +1,17 @@
 package com.technikon.services;
 
 import com.technikon.models.Property;
+import com.technikon.models.PropertyOwner;
+import enums.PropertyType;
 import java.util.List;
 import java.util.Optional;
 
 public interface PropertyService {
     
     /**
-     * The method createProperty calls the User Interface that gets the
-     * information for the new property and returns the created property
+     * The method createProperty gets the fields
      */
-    Property createProperty();
+    Property createProperty(String e9, String address, int yearOfConstruction, PropertyType typeOfProperty, PropertyOwner owner);
     
     /**
      * The method saveProperty gets a Property object, saves it to the database
