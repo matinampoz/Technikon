@@ -14,7 +14,9 @@ import java.util.List;
 public class PropertyOwner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long ownerId;
+
+    @Column(unique = true)
     private long vatNumber;
     private String name;
     private String surname;
