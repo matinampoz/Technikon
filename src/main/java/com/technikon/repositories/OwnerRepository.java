@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 @Slf4j
 public class OwnerRepository implements Repository<PropertyOwner, Long> {
@@ -48,6 +49,18 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
 
     @Override
     public boolean deleteById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PropertyOwner propertyOwner = entityManager.find(PropertyOwner.class, id);
+        if (propertyOwner != null) {
+            try{
+                entityManager.getTransaction().begin();
+                entityManager.remove(propertyOwner);
+                entityManager.getTransaction().commit();
+            } catch (Exception e) {
+                System.out.println("An exception occured");
+            }
+            return true;
+
+        }
+        return false;
     }
 }
