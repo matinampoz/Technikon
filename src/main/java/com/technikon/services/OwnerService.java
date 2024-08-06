@@ -1,5 +1,6 @@
 package com.technikon.services;
 
+import com.technikon.exceptions.OwnerException;
 import com.technikon.models.PropertyOwner;
 
 import java.util.List;
@@ -11,13 +12,14 @@ public interface OwnerService {
 
     Long saveOwner(PropertyOwner propertyowner);
 
-    PropertyOwner searchOwnerByEmail(String email);
+    PropertyOwner searchOwnerByEmail(String email) throws OwnerException;
 
     PropertyOwner searchOwnerByVat(String vatNumber);
 
-    Optional<PropertyOwner> searchOwnerById(String id);
+    PropertyOwner searchOwnerById(String id) throws OwnerException, NumberFormatException;
 
-    Boolean deleteOwner(String id);
+    Boolean deleteOwner(String id) throws OwnerException, NumberFormatException;
 
     List<PropertyOwner> getAllOwners();
+
 }
