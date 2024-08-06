@@ -7,7 +7,7 @@ import enums.RepairStatus;
 import java.util.List;
 import java.util.Scanner;
 
-public class Owner implements User {
+public class OwnerUI implements User {
 
     @Override
     public PropertyOwner createNewOwner() {
@@ -33,11 +33,11 @@ public class Owner implements User {
     public List<PropertyRepair> getRepairs() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    public List<PropertyRepair> getRepairs(RepairStatus status){
-        
+
+    public List<PropertyRepair> getRepairs(RepairStatus status) {
+
         return null;
-        
+
     }
 
     @Override
@@ -48,26 +48,25 @@ public class Owner implements User {
                            1) Display all my Properties.
                            2) Display Pending Repairs.
                            """);
-        
+
         return 0;
     }
-    
-    public int signIn(){
-         Scanner scanner = new Scanner(System.in);
+
+    public PropertyOwner signIn() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("""
                            What would you like to do?
                            1) Create a new profile as a Property Owner.
                            2) Log In as an already existing Property Owner.
                            """);
-        
-//        switch (var) {
-//            case val:
-//                
-//                break;
-//            default:
-//                throw new AssertionError();
-//        }
-        return 0;
-    }
+        int choice = Integer.parseInt(scanner.next());
+        PropertyOwner owner;
+        if (choice == 1) {
+            owner = 
+        } else {
+            //log in
+        }
 
+        return owner;
+    }
 }

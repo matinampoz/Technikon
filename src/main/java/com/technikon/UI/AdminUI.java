@@ -6,7 +6,7 @@ import com.technikon.models.PropertyRepair;
 import java.util.List;
 import java.util.Scanner;
 
-public class Admin implements User {
+public class AdminUI implements User {
 
     @Override
     public PropertyOwner createNewOwner() {
