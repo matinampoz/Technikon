@@ -73,10 +73,10 @@ public class PropertyServiceTest {
         assertEquals(testProperties.get(0).getE9(), result);
     }
 
-    @Test
-    public void testUpdateProperty() {
-
-    }
+//    @Test
+//    public void testUpdateProperty() {
+//
+//    }
 
     @Test
     public void testGetAllProperties() {
