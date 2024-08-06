@@ -42,4 +42,11 @@ public class Property {
     
     @OneToMany(mappedBy = "property")
     private List<PropertyRepair> repairs;
+
+    @Override
+    public String toString() {
+        return "Property{" + " Ε9=" + e9 + ", Αddress=" + address + ", Υear Of Construction=" + yearOfConstruction + ", Τype Of Property=" + typeOfProperty + '}';
+    }
+    
+    
 }

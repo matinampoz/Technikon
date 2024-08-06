@@ -1,57 +1,160 @@
 package com.technikon.UI;
 
+import com.technikon.exceptions.OwnerException;
+import com.technikon.jpa.JpaUtil;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
 import com.technikon.models.PropertyRepair;
-import enums.RepairStatus;
+import com.technikon.repositories.PropertyRepairRepository;
+import com.technikon.repositories.PropertyRepository;
+import com.technikon.services.PropertyRepairService;
+import com.technikon.services.PropertyRepairServiceImpl;
+import com.technikon.services.PropertyService;
+import com.technikon.services.PropertyServiceImpl;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class OwnerUI implements User {
 
-    @Override
-    public PropertyOwner createNewOwner() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private PropertyOwner owner;
+
+    //Constructor
+    public OwnerUI() {
+        this.owner = new PropertyOwner();
     }
 
-    @Override
-    public Property createNewProperty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    //Setter
+    public void setOwner(PropertyOwner owner) {
+        this.owner = owner;
     }
 
-    @Override
-    public PropertyRepair createNewPropertyRepair() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    /**
+     * The method addnewProperty is called when the Owner want's to create a new
+     * Property.
+     *
+     * @return the Property created.
+     */
+    public Property addNewProperty() {
+        return FrontEnd.createNewProperty(owner);
     }
 
+    /**
+     * This method reports on the Properties Linked to the Owner
+     */
     @Override
-    public List<Property> getProperties() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void showProperties() {
+        //initialize property repository and service
+        PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
+        PropertyService propertyService = new PropertyServiceImpl(pRep);
+        List<Property> properties = propertyService.findPropertiesByVAT(owner.getVatNumber());
+        properties.stream().forEach(System.out::println);
     }
 
+    /**
+     * This method reports on the Repairs Linked to the Owner
+     */
     @Override
-    public List<PropertyRepair> getRepairs() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void showRepairs() {
+        //initialize property reapairs repository and service
+        PropertyRepairRepository rRep = new PropertyRepairRepository(JpaUtil.getEntityManager());
+        PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(rRep);
+        List<PropertyRepair> repairs = propertyRepairService.getPropertyRepairs();
+        List<PropertyRepair> myRepairs = repairs.stream().filter(repair -> repair.getOwner().getVatNumber().equals(owner.getVatNumber()))
+                .collect(Collectors.toList());
+        myRepairs.stream().forEach(System.out::println);
     }
 
-    public List<PropertyRepair> getRepairs(RepairStatus status) {
-
-        return null;
+    /**
+     * The method displayOnSelection should be displayed when the user has
+     * connected. For the Owner it displays the Owner's Properties and the
+     * Repairs linked to those Properties.
+     */
+    @Override
+    public void displayOnSelection() {
+        System.out.println("Hello " + this.owner.getName() + "!!!");
+        System.out.println("Here are your properties and the repairs for each of them:");
+        //initialize property repository and service
+        PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
+        PropertyService propertyService = new PropertyServiceImpl(pRep);
+        List<Property> myProperties = propertyService.findPropertiesByVAT(owner.getVatNumber());
+        for (Property property : myProperties) {
+            System.out.println(property);
+            System.out.println("Repairs for property (E9: " + property.getE9() + " ):");
+            List<PropertyRepair> repairs = property.getRepairs();
+            repairs.stream().forEach(System.out::println);
+        }
 
     }
 
+    /**
+     * Communicates with the user to show him the report that he needs.
+     */
     @Override
-    public int getAction() {
+    public void getReport() {
+        //ask the user which report they want to get
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
-                           What would you like to do?
+                           What would you like to see?
+                           
                            1) Display all my Properties.
-                           2) Display Pending Repairs.
+                           2) Display all Repairs' Statuses.
+                           
                            """);
-
-        return 0;
+        int choice = Integer.parseInt(scanner.next());  //get answer
+        if (choice == 1) {   //if he asked for the properties
+            showProperties();
+        } else {              //if he inputed anything else
+            showRepairs();
+        }
     }
 
+    /**
+     * The method UserMenu is the method that navigates the users in all
+     * available actions they can take.
+     */
+    @Override
+    public void UserMenu() {
+        Scanner scanner = new Scanner(System.in);
+        OUTER:
+        do {
+            System.out.println("""
+                                           What would you like to do?
+                                           1: Get Reports on your Properties...
+                                           2: Update a Property...
+                                           3: Delete a Property...
+                                           4: See submitted Repairs...
+                                           5: Add a Property...
+                                           6: Exit app...
+                                           """);
+            int choice = Integer.parseInt(scanner.next());
+            switch (choice) {
+                case 1: //REPORTS
+                    getReport();
+                    break;
+                case 2: //update property
+                    
+                    break;
+                case 3: //delete property
+                    
+                    break;
+                case 4: //see repairs
+                    
+                    break;
+                case 5: //New Property
+                    addNewProperty();
+                    break;
+                default:
+                    break OUTER;
+            }
+        } while (true);
+    }
+
+    /**
+     * Communicates with the user to help them connect to the app
+     *
+     * @return the Signed In user-PropertyOwner
+     */
     public PropertyOwner signIn() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
@@ -59,13 +162,20 @@ public class OwnerUI implements User {
                            1) Create a new profile as a Property Owner.
                            2) Log In as an already existing Property Owner.
                            """);
-        int choice = Integer.parseInt(scanner.next());
         PropertyOwner owner;
-        if (choice == 1) {
-            owner = 
-        } else {
-            //log in
-        }
+        do {
+            int choice = Integer.parseInt(scanner.next());
+            if (choice == 1) {      //if the user wants to Sign Up
+                owner = FrontEnd.createNewPropertyOwner();
+            } else {                //if the user wants to Log In
+                try {
+                    owner = FrontEnd.logIn();
+                } catch (OwnerException ex) {
+                    System.out.println(ex.getMessage());
+                    owner = null;
+                }
+            }
+        } while (owner != null); //continue untill we have a user signed in
 
         return owner;
     }

@@ -9,22 +9,12 @@ import java.util.Scanner;
 public class AdminUI implements User {
 
     @Override
-    public PropertyOwner createNewOwner() {
+    public PropertyRepair addNewProperty() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Property createNewProperty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public PropertyRepair createNewPropertyRepair() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<Property> getProperties() {
+    public List<Property> showProperties() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -34,10 +24,15 @@ public class AdminUI implements User {
     }
 
     @Override
-    public int getAction() {
+    public int getReport() {
         Scanner scanner = new Scanner(System.in);
         return 0;
         
+    }
+
+    @Override
+    public void displayOnSelection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
