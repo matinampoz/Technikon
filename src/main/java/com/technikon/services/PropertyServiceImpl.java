@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 public class PropertyServiceImpl implements PropertyService {
 
     public PropertyServiceImpl(PropertyRepository propertyRepository) {
@@ -22,8 +21,7 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public Property createProperty(String e9, String address, int yearOfConstruction, PropertyType typeOfProperty, PropertyOwner owner) {
 
-        Property createdProperty = new Property();
-        createdProperty.builder()
+        return Property.builder()
                 .e9(e9)
                 .address(address)
                 .yearOfConstruction(yearOfConstruction)
@@ -31,7 +29,6 @@ public class PropertyServiceImpl implements PropertyService {
                 .propertyOwner(owner)
                 .build();
 
-        return createdProperty;
     }
 
     @Override

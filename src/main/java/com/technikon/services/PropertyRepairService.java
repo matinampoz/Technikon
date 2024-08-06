@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface PropertyRepairService {
 
-    PropertyRepair createPropertyRepair(PropertyOwner owner, Property property, RepairType typeOfRepair,
-            String shortDescription, String workDescription,
-            LocalDateTime proposedStartDate, LocalDateTime proposedEndDate,
+    PropertyRepair createPropertyRepair(Property property, RepairType typeOfRepair,
+            String shortDescription, String workDescription, String submissionDate,
+            String proposedStartDate, String proposedEndDate,
             double proposedCost);
 
     Long savePropertyRepair(PropertyRepair propertyRepair);
@@ -22,7 +22,7 @@ public interface PropertyRepairService {
 
     void deletePropertyRepair(Long id);
 
-    List<PropertyRepair> searchPropertyRepairsByDateRange(LocalDateTime startDate, LocalDateTime endDate);
+    List<PropertyRepair> searchPropertyRepairsByDateRange(String startDate, String endDate);
 
     List<PropertyRepair> searchPropertyRepairsByOwnerId(Long ownerId);
 }

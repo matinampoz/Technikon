@@ -19,18 +19,17 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     }
 
     @Override
-    public PropertyRepair createPropertyRepair(PropertyOwner owner, Property property, RepairType typeOfRepair,
+    public PropertyRepair createPropertyRepair(Property property, RepairType typeOfRepair, String submissionDate,
             String shortDescription, String workDescription,
-            LocalDateTime proposedStartDate, LocalDateTime proposedEndDate,
+            String proposedStartDate, String proposedEndDate,
             double proposedCost) {
 
         PropertyRepair repair = PropertyRepair.builder()
-                .owner(owner)
                 .property(property)
                 .typeOfRepair(typeOfRepair)
                 .shortDescription(shortDescription)
                 .workDescription(workDescription)
-                .submissionDate(LocalDateTime.now())
+                .submissionDate(submissionDate)
                 .proposedStartDate(proposedStartDate)
                 .proposedEndDate(proposedEndDate)
                 .proposedCost(proposedCost)
@@ -41,6 +40,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
 
     @Override
     public Long savePropertyRepair(PropertyRepair propertyRepair) {
+        System.out.println("----------TRYING TO SAVE. savePropertyRepair() called");
         propertyRepairRepository.save(propertyRepair);
         return propertyRepair.getRepairId();
     }
@@ -66,12 +66,12 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     }
 
     @Override
-    public List<PropertyRepair> searchPropertyRepairsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<PropertyRepair> searchPropertyRepairsByDateRange(String startDate, String endDate) {
         return propertyRepairRepository.findBySubmissionDateBetween(startDate, endDate);
     }
 
     @Override
     public List<PropertyRepair> searchPropertyRepairsByOwnerId(Long ownerId) {
-        return propertyRepairRepository.findByOwner_Id(ownerId);
+        return propertyRepairRepository.findByOwnerId(ownerId);
     }
 }

@@ -47,6 +47,7 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
             entityManager.getTransaction().commit();
             return Optional.of(t);
         } catch (Exception e) {
+            System.out.println("-------------TRIED TO SAVE BUT FAILED");
             entityManager.getTransaction().rollback();
             throw new PropertyRepairException("Failed to save PropertyRepair", e);
         }
@@ -72,7 +73,7 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
         return false;
     }
 
-    public List<PropertyRepair> findBySubmissionDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<PropertyRepair> findBySubmissionDateBetween(String startDate, String endDate) {
         try {
             TypedQuery<PropertyRepair> query = entityManager.createQuery(
                     "SELECT r FROM PropertyRepair r WHERE r.submissionDate BETWEEN :startDate AND :endDate", PropertyRepair.class);
@@ -84,10 +85,10 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
         }
     }
 
-    public List<PropertyRepair> findByOwner_Id(Long ownerId) {
+    public List<PropertyRepair> findByOwnerId(Long ownerId) {
         try {
             TypedQuery<PropertyRepair> query = entityManager.createQuery(
-                    "SELECT r FROM PropertyRepair r WHERE r.owner.id = :ownerId", PropertyRepair.class);
+                    "SELECT r FROM PropertyRepair r WHERE r.property.propertyOwner.ownerId = :ownerId", PropertyRepair.class);
             query.setParameter("ownerId", ownerId);
             return query.getResultList();
         } catch (Exception e) {
