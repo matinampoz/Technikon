@@ -1,5 +1,6 @@
 package com.technikon;
 
+import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
@@ -15,6 +16,8 @@ import enums.RepairType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 public class Main {
@@ -72,7 +75,11 @@ public class Main {
                 owner);
         System.out.println("------------------------------------------------");
         System.out.println("--------------PROPERTY CREATED----------------");
-        propertyService.saveProperty(property);
+        try {
+            propertyService.saveProperty(property);
+        } catch (PropertyException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println("----------------PROPERTY SAVED-----------------");
 
 //        System.out.println("--------------DELETE BY ID PROPERTY--------");
