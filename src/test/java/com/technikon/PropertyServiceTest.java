@@ -23,8 +23,6 @@ public class PropertyServiceTest {
 
     @Mock
     private PropertyRepository propertyRepository;
-    // or using a method - not so clean
-    // private MovieRepository movieRepository = mock(MovieRepository.class);
 
     //testData
     PropertyOwner testOwner1;
@@ -38,6 +36,7 @@ public class PropertyServiceTest {
     public void setUp() {
         // mockito initialization
         MockitoAnnotations.openMocks(this);
+
         testOwner1 = new PropertyOwner();
         testOwner1.setVatNumber(0123L);
         testOwner2 = new PropertyOwner();
@@ -59,17 +58,17 @@ public class PropertyServiceTest {
                 .typeOfProperty(PropertyType.DETACHED_HOUSE)
                 .propertyOwner(testOwner2)
                 .build();
-        
+
         Property result = propertyService.createProperty("E100", "KP 30", 2004, PropertyType.DETACHED_HOUSE, testOwner2);
         assertEquals(expectedProperty, result);
-        
+
     }
-    
+
     @Test
     public void testSaveProperty() throws PropertyException {
         Optional<Property> savedProperty = Optional.of(testProperties.get(0));
         when(propertyRepository.save(testProperties.get(0))).thenReturn(savedProperty);
-        
+
         String result = propertyService.saveProperty(testProperties.get(0));
         assertEquals(testProperties.get(0).getE9(), result);
     }
@@ -90,11 +89,11 @@ public class PropertyServiceTest {
     @Test
     public void testFindPropertiesByVAT() {
         when(propertyRepository.findAll()).thenReturn(testProperties);
-        
+
         //testing for the first owner
         List<Property> result = propertyService.findPropertiesByVAT(0123L);
         assertEquals(2, result.size());
-        
+
         //testing for the second owner
         List<Property> result2 = propertyService.findPropertiesByVAT(0124L);
         assertEquals(1, result2.size());
@@ -102,11 +101,20 @@ public class PropertyServiceTest {
 
     @Test
     public void testFindPropertyByID() {
-
+        Property mockProperty = testProperties.get(0);
+        when(propertyRepository.findById(mockProperty.getPropertyId())).thenReturn(Optional.of(mockProperty));
+        
+        Optional<Property> result = propertyService.findPropertyByID(testProperties.get(0).getPropertyId());
+        assertEquals(mockProperty, result.get());
+        
     }
 
     @Test
     public void testFindPropertyByE9() {
-
+        Property mockProperty = testProperties.get(0);
+        when(propertyRepository.findById(mockProperty.getE9())).thenReturn(Optional.of(mockProperty));
+        
+        Optional<Property> result = propertyService.findPropertyByID(testProperties.get(0).getPropertyId());
+        assertEquals(mockProperty, result.get());
     }
 }

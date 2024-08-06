@@ -9,12 +9,15 @@ import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+
 public class PropertyServiceImpl implements PropertyService {
 
-    private final PropertyRepository propertyRepository;
+    public PropertyServiceImpl(PropertyRepository propertyRepository) {
+        this.propertyRepository = propertyRepository;
+    }
+
+    private PropertyRepository propertyRepository;
 
     @Override
     public Property createProperty(String e9, String address, int yearOfConstruction, PropertyType typeOfProperty, PropertyOwner owner) {
@@ -35,9 +38,9 @@ public class PropertyServiceImpl implements PropertyService {
     public String saveProperty(Property property) throws PropertyException {
 
         Optional<Property> savedProperty = propertyRepository.save(property);
-        if (savedProperty.isEmpty()){
+        if (savedProperty.isEmpty()) {
             throw new PropertyException("!!!>>>Error while saving the Property!!!");
-        }else{
+        } else {
             return savedProperty.get().getE9();
         }
     }
@@ -54,7 +57,7 @@ public class PropertyServiceImpl implements PropertyService {
     public boolean deleteProperty(Long id) {
         return propertyRepository.deleteById(id);
     }
-    
+
     @Override
     public List<Property> getAllProperties() {
         return propertyRepository.findAll();
