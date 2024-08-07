@@ -1,6 +1,7 @@
 package com.technikon.UI;
 
 import com.technikon.exceptions.OwnerException;
+import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
@@ -39,10 +40,39 @@ public class OwnerUI implements User {
     public Property addNewProperty() {
         return FrontEnd.createNewProperty(owner);
     }
-    
+
+    /**
+     * The method deleteProperty is called when the Owner wants to delete one
+     * Property. Communicates with the User to find the property to delete and
+     * informs them if the deletion was successfull.
+     */
     @Override
     public void deleteProperty() {
-        
+        //initialize property repository and service
+        PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
+        PropertyService propertyService = new PropertyServiceImpl(pRep);
+
+        //get property to delete
+        Scanner scanner = new Scanner(System.in);
+        String e9;
+        Optional<Property> propertyFound;
+        do {
+            System.out.println("Please enter the E9 of the Property you want to delete:");
+            e9 = scanner.next();
+            propertyFound = propertyService.findPropertyByE9(e9);
+            if (propertyFound.isEmpty()) {
+                System.out.println("Property with E9: (" + e9 + ") NOT FOUND! Please try again...");
+            }
+        } while (propertyFound.isEmpty());
+
+        //delete the property
+        boolean propertyDeleted = propertyService.deleteProperty(propertyFound.get().getPropertyId());
+        //inform about the outcome of the deletion
+        if (propertyDeleted) {
+            System.out.println("PROPERTY DELETED SUCCESSFULLY!!!");
+        } else {
+            System.out.println("THE PROPERTY COULD NOT BE DELETED...");
+        }
     }
 
     /**
@@ -65,10 +95,8 @@ public class OwnerUI implements User {
         //initialize property reapairs repository and service
         PropertyRepairRepository rRep = new PropertyRepairRepository(JpaUtil.getEntityManager());
         PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(rRep);
-        List<PropertyRepair> repairs = propertyRepairService.getPropertyRepairs();
-        List<PropertyRepair> myRepairs = repairs.stream().filter(repair -> repair.getProperty().getPropertyOwner().getVatNumber().equals(owner.getVatNumber()))
-                .collect(Collectors.toList());
-        myRepairs.stream().forEach(System.out::println);
+        List<PropertyRepair> repairs = propertyRepairService.getOwnerRepairs(owner.getVatNumber());
+        repairs.stream().forEach(System.out::println);
     }
 
     /**
@@ -142,10 +170,10 @@ public class OwnerUI implements User {
                     updatePropertyDetails();
                     break;
                 case 3: //delete property
-
+                    deleteProperty();
                     break;
                 case 4: //see repairs
-
+                    getUnansweredRepairs();
                     break;
                 case 5: //New Property
                     addNewProperty();
@@ -186,6 +214,12 @@ public class OwnerUI implements User {
         return owner;
     }
 
+    /**
+     * The method updatePropertyDetails is called when the User wants to update
+     * the fields of one Property. It gets the Property to be updated and sends
+     * it to the Front End to get changes on it from the User. When that's over
+     * the Property is saved to be updated.
+     */
     private void updatePropertyDetails() {
         //initialize property repository and service
         PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
@@ -204,9 +238,46 @@ public class OwnerUI implements User {
             }
         } while (propertyFound.isEmpty());
 
-        //save the new property after sending it to front end to get it updated
-        propertyService.saveProperty(FrontEnd.updatProperty(propertyFound.get()));
-        System.out.println("UPDATED PROPERTY SUCCESSFULLY!!!");
+        try {
+            //save the new property after sending it to front end to get it updated
+            propertyService.saveProperty(FrontEnd.updatProperty(propertyFound.get()));
+            System.out.println("UPDATED PROPERTY SUCCESSFULLY!!!");
+        } catch (PropertyException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void getUnansweredRepairs() {
+        //initialize property reapairs repository and service
+        PropertyRepairRepository rRep = new PropertyRepairRepository(JpaUtil.getEntityManager());
+        PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(rRep);
+        //get Owner's unanswered repairs
+        List<PropertyRepair> repairs = propertyRepairService.getUnansweredOwnerRepairs(owner.getVatNumber());
+
+        for (int i = 0; i < repairs.size(); i++) {
+            System.out.println((i + 1) + ": " + repairs.get(i));
+        }
+        //get repair to answer
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("Which repair would you like to verify?(Enter one of the numbers above...)");
+            choice = Integer.parseInt(scanner.next());
+        } while (choice < 1 || choice > repairs.size());
+        
+        choice--;//matching the list's indexes
+        PropertyRepair repairToAnswer = repairs.get(choice);
+        
+        System.out.println("You chose to answer: " + repairToAnswer);
+        System.out.println("Do you ACCEPT(A) or DECLINE(D) the repair?");
+        String ans = scanner.next();
+        if (ans.toUpperCase().equals("A")||ans.toUpperCase().equals("ACCEPT")){
+            System.out.println("REPAIR ACCEPTED!!!");
+            repairToAnswer.setOwnerAcceptance(true);
+        }else{
+            System.out.println("REPAIR DECLINED...");
+            repairToAnswer.setOwnerAcceptance(false);
+        }
     }
 
 }
