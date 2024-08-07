@@ -12,7 +12,7 @@ public interface PropertyRepairService {
     PropertyRepair createPropertyRepair(Property property, RepairType typeOfRepair,
             String shortDescription, String workDescription, String submissionDate,
             String proposedStartDate, String proposedEndDate,
-            double proposedCost);
+            double proposedCost,boolean ownerAcceptance);
 
     Long savePropertyRepair(PropertyRepair propertyRepair);
 

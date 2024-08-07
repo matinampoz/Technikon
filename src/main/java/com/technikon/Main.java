@@ -108,7 +108,8 @@ public class Main {
                 "12/5/98",
                 "Aurio",
                 "Paraskeuh",
-                1000);
+                1000,
+                false);
 
         propertyRepairService.savePropertyRepair(repair);
         System.out.println("----------------REPAIR CREATED AND SAVED-----------------------------");

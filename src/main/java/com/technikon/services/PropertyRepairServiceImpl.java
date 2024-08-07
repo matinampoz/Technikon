@@ -21,7 +21,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     public PropertyRepair createPropertyRepair(Property property, RepairType typeOfRepair, String submissionDate,
             String shortDescription, String workDescription,
             String proposedStartDate, String proposedEndDate,
-            double proposedCost) {
+            double proposedCost,boolean ownerAcceptance) {
 
         PropertyRepair repair = PropertyRepair.builder()
                 .property(property)
@@ -32,6 +32,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 .proposedStartDate(proposedStartDate)
                 .proposedEndDate(proposedEndDate)
                 .proposedCost(proposedCost)
+                .ownerAcceptance(ownerAcceptance)
                 .status(RepairStatus.PENDING)
                 .build();
         return repair;
