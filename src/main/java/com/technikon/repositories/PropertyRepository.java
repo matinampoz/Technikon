@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 public class PropertyRepository implements Repository<Property, Long> {
 
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 
     public PropertyRepository(EntityManager entityManager) {
         this.entityManager = entityManager;

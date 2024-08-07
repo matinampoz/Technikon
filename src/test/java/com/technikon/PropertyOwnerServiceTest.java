@@ -47,7 +47,7 @@ public class PropertyOwnerServiceTest {
     public void testGetAllOwners() {
         List<PropertyOwner> owners = Arrays.asList(
                 PropertyOwner.builder()
-                        .vatNumber(123456789L)
+                        .vatNumber("123456789")
                         .name("Elon")
                         .surname("Musk")
                         .address("3500 Deer Creek Road, Palo Alto, CA")
@@ -57,7 +57,7 @@ public class PropertyOwnerServiceTest {
                         .password("password123")
                         .build(),
                 PropertyOwner.builder()
-                        .vatNumber(987654321L)
+                        .vatNumber("987654321")
                         .name("Jeff")
                         .surname("Bezos")
                         .address("410 Terry Ave N, Seattle, WA")
@@ -81,7 +81,7 @@ public class PropertyOwnerServiceTest {
     @Test
     public void testSearchOwnerById() throws OwnerException {
         PropertyOwner propertyOwner = PropertyOwner.builder()
-                .vatNumber(987654321L)
+                .vatNumber("987654321")
                 .name("Jeff")
                 .surname("Bezos")
                 .address("410 Terry Ave N, Seattle, WA")
@@ -109,7 +109,7 @@ public class PropertyOwnerServiceTest {
     @Test
     public void testSearchOwnerByEmail() throws OwnerException {
         PropertyOwner propertyOwner = PropertyOwner.builder()
-                .vatNumber(987654321L)
+                .vatNumber("987654321")
                 .name("Jeff")
                 .surname("Bezos")
                 .address("410 Terry Ave N, Seattle, WA")
@@ -131,9 +131,9 @@ public class PropertyOwnerServiceTest {
     }
 
     @Test
-    public void testSearchOwnerByVatNumber(){
+    public void testSearchOwnerByVatNumber() throws OwnerException{
         PropertyOwner propertyOwner = PropertyOwner.builder()
-                .vatNumber(987654321L)
+                .vatNumber("987654321")
                 .name("Jeff")
                 .surname("Bezos")
                 .address("410 Terry Ave N, Seattle, WA")
@@ -156,7 +156,7 @@ public class PropertyOwnerServiceTest {
     @Test
     public void testCreateOwner() {
 
-        PropertyOwner result = ownerServiceImpl.createOwner(987654321L, "Jeff", "Bezos",
+        PropertyOwner result = ownerServiceImpl.createOwner("987654321", "Jeff", "Bezos",
                 "410 Terry Ave N, Seattle, WA",
                 9876543210L, "jeffbezos@example.com",
                 "jeffbezos", "password321");

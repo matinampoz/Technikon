@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 public class PropertyServiceImpl implements PropertyService {
 
+    private PropertyRepository propertyRepository;
+    
     public PropertyServiceImpl(PropertyRepository propertyRepository) {
         this.propertyRepository = propertyRepository;
     }
-
-    private PropertyRepository propertyRepository;
 
     @Override
     public Property createProperty(String e9, String address, int yearOfConstruction, PropertyType typeOfProperty, PropertyOwner owner) {
@@ -53,14 +53,14 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public List<Property> findPropertiesByVAT(Long ownerVat) {
+    public List<Property> findPropertiesByVAT(String ownerVat) {
 
 //        OwnerService ownerService = new OwnerServiceImpl(new OwnerRepository(JpaUtil.getEntityManager()));
 //        PropertyOwner owner = ownerService.searchOwnerByVat(ownerVat);
 //        return propertyRepository.findAll(owner);
         List<Property> allProperties = propertyRepository.findAll();
         allProperties.stream()
-                .filter(property -> property.getPropertyOwner().getVatNumber() == ownerVat)
+                .filter(property -> property.getPropertyOwner().getVatNumber().equals(ownerVat))
                 .collect(Collectors.toList());
         return allProperties;
     }

@@ -38,7 +38,7 @@ public interface PropertyService {
      * The method findPropertiesByVAT gets a Property owner's VAT and returns
      * all the properties that the owner has
      */
-    List<Property> findPropertiesByVAT(Long ownerVat);
+    List<Property> findPropertiesByVAT(String ownerVat);
     
     /**
      * The method findPropertyByID gets the id of the property that is searched
