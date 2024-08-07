@@ -21,6 +21,7 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public Property createProperty(String e9, String address, int yearOfConstruction, PropertyType typeOfProperty, PropertyOwner owner) {
 
+
         return Property.builder()
                 .e9(e9)
                 .address(address)
@@ -28,7 +29,6 @@ public class PropertyServiceImpl implements PropertyService {
                 .typeOfProperty(typeOfProperty)
                 .propertyOwner(owner)
                 .build();
-
     }
 
     @Override
