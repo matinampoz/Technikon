@@ -1,5 +1,6 @@
 package com.technikon.services;
 
+import com.technikon.exceptions.OwnerException;
 import com.technikon.models.PropertyOwner;
 import com.technikon.models.PropertyRepair;
 import com.technikon.repositories.OwnerRepository;
@@ -8,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class OwnerServiceImpl implements OwnerService{
-    private final OwnerRepository ownerRepository;
+
+    private OwnerRepository ownerRepository;
 
     public OwnerServiceImpl(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
@@ -42,14 +44,11 @@ public class OwnerServiceImpl implements OwnerService{
     }
 
     @Override
-    public PropertyOwner searchOwnerByEmail(String email) {
-        List<PropertyOwner> owners = ownerRepository.findAll();
-        for (PropertyOwner owner : owners) {
-            if (owner.getEmail().equalsIgnoreCase(email)) {
-                return owner;
-            }
+    public PropertyOwner searchOwnerByEmail(String email) throws OwnerException {
+        if (email == null || !email.contains("@")) {
+            throw new OwnerException("Invalid email");
         }
-        return null;
+        return ownerRepository.findOwnerByEmail(email);
     }
 
     @Override
@@ -69,25 +68,25 @@ public class OwnerServiceImpl implements OwnerService{
     }
 
     @Override
-    public Optional<PropertyOwner> searchOwnerById(String id) {
-        try {
+    public PropertyOwner searchOwnerById(String id) throws OwnerException, NumberFormatException{
+            if (id == null) {
+                throw new OwnerException("Invalid id");
+            }
             Long ownerId = Long.parseLong(id);
-            return ownerRepository.findById(ownerId);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid ID format: " + id);
-            return Optional.empty();
+            Optional<PropertyOwner> owner = ownerRepository.findById(ownerId);
+            if (owner.isPresent()){
+                return owner.get();
         }
+            throw new OwnerException("id not found");
     }
 
 
     @Override
-    public Boolean deleteOwner(String id) {
-        try {
-            Long ownerId = Long.parseLong(id);
-            return ownerRepository.deleteById(ownerId);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid ID format: " + id);
-            return false;
-        }
+    public Boolean deleteOwner(String id) throws OwnerException, NumberFormatException{
+        if (id == null){
+            throw new OwnerException("Invalid id");}
+        Long ownerId = Long.parseLong(id);
+        return ownerRepository.deleteById(ownerId);
+
     }
 }

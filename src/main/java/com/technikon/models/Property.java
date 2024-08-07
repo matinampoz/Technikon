@@ -2,6 +2,7 @@ package com.technikon.models;
 
 import enums.PropertyType;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class Property {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long propertyId;
     
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String e9;
     
     private String address;
@@ -47,6 +48,4 @@ public class Property {
     public String toString() {
         return "Property{" + " Ε9=" + e9 + ", Αddress=" + address + ", Υear Of Construction=" + yearOfConstruction + ", Τype Of Property=" + typeOfProperty + '}';
     }
-    
-    
 }

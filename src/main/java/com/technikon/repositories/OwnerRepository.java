@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Slf4j
 public class OwnerRepository implements Repository<PropertyOwner, Long> {
 
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 
     public OwnerRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -62,5 +62,11 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
 
         }
         return false;
+    }
+
+    public PropertyOwner findOwnerByEmail(String email){
+        TypedQuery<PropertyOwner> typedQuery = entityManager.createQuery("from PropertyOwner where email =: data", PropertyOwner.class);
+        typedQuery.setParameter("data", email);
+        return typedQuery.getSingleResult();
     }
 }

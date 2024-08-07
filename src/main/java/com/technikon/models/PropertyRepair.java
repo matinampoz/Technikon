@@ -20,25 +20,21 @@ public class PropertyRepair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long repairId;
-    
-    @ManyToOne
-    @JoinColumn(name = "vatNumber", referencedColumnName = "vatNumber")
-    private PropertyOwner owner;
-    
+
     @ManyToOne
     @JoinColumn(name = "propertyId", referencedColumnName = "propertyId")
     private Property property;
-    
+
     private RepairType typeOfRepair;
     private String shortDescription;
-    private LocalDateTime submissionDate;
+    private String submissionDate;
     private String workDescription;
-    private LocalDateTime proposedStartDate;
-    private LocalDateTime proposedEndDate;
+    private String proposedStartDate;
+    private String proposedEndDate;
     private double proposedCost;
     private boolean ownerAcceptance;
     private RepairStatus status;
-    private LocalDateTime actualStartDate;
-    private LocalDateTime actualEndDate;
+    private String actualStartDate;
+    private String actualEndDate;
 
 }

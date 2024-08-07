@@ -1,5 +1,6 @@
 package com.technikon.services;
 
+import com.technikon.exceptions.PropertyException;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
 import enums.PropertyType;
@@ -17,8 +18,9 @@ public interface PropertyService {
      * The method saveProperty gets a Property object, saves it to the database
      * and returns its E9
      */
-    String saveProperty(Property property);
 
+    String saveProperty(Property property) throws PropertyException ;
+    
     /**
      * The method deleteProperty gets a property's id and calls the property
      * repository to delete the property with that id from the database if it
@@ -28,10 +30,15 @@ public interface PropertyService {
     boolean deleteProperty(Long id);
     
     /**
+     * The method getAllProperties returns all the properties in the application
+     */
+    List<Property> getAllProperties();
+    
+    /**
      * The method findPropertiesByVAT gets a Property owner's VAT and returns
      * all the properties that the owner has
      */
-    List<Property> findPropertiesByVAT(String ownerVat);
+    List<Property> findPropertiesByVAT(Long ownerVat);
     
     /**
      * The method findPropertyByID gets the id of the property that is searched
