@@ -11,10 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-@Slf4j
 public class OwnerRepository implements Repository<PropertyOwner, Long> {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public OwnerRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -67,6 +66,12 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
     public PropertyOwner findOwnerByEmail(String email){
         TypedQuery<PropertyOwner> typedQuery = entityManager.createQuery("from PropertyOwner where email =: data", PropertyOwner.class);
         typedQuery.setParameter("data", email);
+        return typedQuery.getSingleResult();
+    }
+
+    public PropertyOwner findOwnerByVat(String vat){
+        TypedQuery<PropertyOwner> typedQuery = entityManager.createQuery("from PropertyOwner where vat =: data", PropertyOwner.class);
+        typedQuery.setParameter("data", vat);
         return typedQuery.getSingleResult();
     }
 }

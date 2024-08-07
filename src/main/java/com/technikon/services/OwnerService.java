@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OwnerService {
-    PropertyOwner createOwner(Long vatNumber, String name, String surname, String address, long phoneNumber,
+    PropertyOwner createOwner(String vatNumber, String name, String surname, String address, long phoneNumber,
                               String email, String username, String password);
 
     Long saveOwner(PropertyOwner propertyowner);
 
     PropertyOwner searchOwnerByEmail(String email) throws OwnerException;
 
-    PropertyOwner searchOwnerByVat(String vatNumber);
+    PropertyOwner searchOwnerByVat(String vatNumber) throws OwnerException;
 
     PropertyOwner searchOwnerById(String id) throws OwnerException, NumberFormatException;
 

@@ -10,14 +10,14 @@ import java.util.Optional;
 
 public class OwnerServiceImpl implements OwnerService{
 
-    private OwnerRepository ownerRepository;
+    private final OwnerRepository ownerRepository;
 
     public OwnerServiceImpl(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
     }
 
     @Override
-    public PropertyOwner createOwner(Long vatNumber, String name, String surname, String address, long phoneNumber,
+    public PropertyOwner createOwner(String vatNumber, String name, String surname, String address, long phoneNumber,
                               String email, String username, String password){
 
         return PropertyOwner.builder()
@@ -52,19 +52,11 @@ public class OwnerServiceImpl implements OwnerService{
     }
 
     @Override
-    public PropertyOwner searchOwnerByVat(String vatNumber) {
-        try {
-            long vatNumberLong = Long.parseLong(vatNumber);
-            List<PropertyOwner> owners = ownerRepository.findAll();
-            for (PropertyOwner owner : owners) {
-                if (owner.getVatNumber() == vatNumberLong) {
-                    return owner;
-                }
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid VAT number format: " + vatNumber);
+    public PropertyOwner searchOwnerByVat(String vatNumber) throws OwnerException {
+        if (vatNumber == null){
+            throw new OwnerException("Invalid vat number");
         }
-        return null;
+        return ownerRepository.findOwnerByVat(vatNumber);
     }
 
     @Override

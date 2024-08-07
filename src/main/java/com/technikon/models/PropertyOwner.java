@@ -16,7 +16,7 @@ public class PropertyOwner {
     private long ownerId;
 
     @Column(unique = true)
-    private long vatNumber;
+    private String vatNumber;
     private String name;
     private String surname;
     private String address;

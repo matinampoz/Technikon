@@ -38,7 +38,7 @@ public class Main {
 
         System.out.println("------TRYING TO CREATE OWNER----------------------------");
         PropertyOwner owner = ownerService.createOwner(
-                123456789L,
+                "123456789",
                 "John",
                 "Doe",
                 "123 Elm Street",
