@@ -15,6 +15,8 @@ import com.technikon.services.PropertyServiceImpl;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class OwnerUI implements User {
@@ -37,8 +39,13 @@ public class OwnerUI implements User {
      *
      * @return the Property created.
      */
-    public Property addNewProperty() {
-        return FrontEnd.createNewProperty(owner);
+    public Optional<Property> addNewProperty() {
+        try {
+            return Optional.of(FrontEnd.createNewProperty(owner));
+        } catch (PropertyException ex) {
+            System.out.println(ex.getMessage()); 
+            return Optional.empty();
+        }
     }
 
     /**
