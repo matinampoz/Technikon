@@ -12,6 +12,7 @@ import com.technikon.services.PropertyRepairServiceImpl;
 import com.technikon.services.PropertyService;
 import com.technikon.services.PropertyServiceImpl;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -133,13 +134,13 @@ public class OwnerUI implements User {
                     getReport();
                     break;
                 case 2: //update property
-                    
+                    updatePropertyDetails();
                     break;
                 case 3: //delete property
-                    
+
                     break;
                 case 4: //see repairs
-                    
+
                     break;
                 case 5: //New Property
                     addNewProperty();
@@ -178,5 +179,28 @@ public class OwnerUI implements User {
         } while (owner != null); //continue untill we have a user signed in
 
         return owner;
+    }
+
+    private void updatePropertyDetails() {
+        //initialize property repository and service
+        PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
+        PropertyService propertyService = new PropertyServiceImpl(pRep);
+
+        //get property to update
+        Scanner scanner = new Scanner(System.in);
+        String e9;
+        Optional<Property> propertyFound;
+        do {
+            System.out.println("Please enter the E9 of the Property you want to edit:");
+            e9 = scanner.next();
+            propertyFound = propertyService.findPropertyByE9(e9);
+            if (propertyFound.isEmpty()) {
+                System.out.println("Property with E9: (" + e9 + ") NOT FOUND! Please try again...");
+            }
+        } while (propertyFound.isEmpty());
+
+        //save the new property after sending it to front end to get it updated
+        propertyService.saveProperty(FrontEnd.updatProperty(propertyFound.get()));
+        System.out.println("UPDATED PROPERTY SUCCESSFULLY!!!");
     }
 }

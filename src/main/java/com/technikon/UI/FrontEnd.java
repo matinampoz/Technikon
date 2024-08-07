@@ -15,23 +15,25 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FrontEnd {
-    
+
     public static PropertyOwner logIn() throws OwnerException {
         //initialize owner repository and service
         OwnerRepository oRep = new OwnerRepository(JpaUtil.getEntityManager());
         OwnerService ownerService = new OwnerServiceImpl(oRep);
-        
+
         List<PropertyOwner> owners = ownerService.getAllOwners();
-        if (owners.size() == 0) throw new OwnerException("There are no owners in the application. Please try entering one first.");
-        
+        if (owners.size() == 0) {
+            throw new OwnerException("There are no owners in the application. Please try entering one first.");
+        }
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the email address of the Property Owner you want to Log In as:");
         String logInEmail = scanner.next();
-        
+
         return ownerService.searchOwnerByEmail(logInEmail);
-        
+
     }
-    
+
     /**
      * The static method createNewPropertyOwner is called to create a new
      * property owner and then calls the method createNewProperty to create the
@@ -128,7 +130,61 @@ public class FrontEnd {
         //save the Property
         propertyService.saveProperty(newProperty);
         System.out.println("Property at address " + newProperty.getAddress() + " CREATED!");
-        
+
         return newProperty;
+    }
+
+    public static Property updatProperty(Property property) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("This Property has:");
+            System.out.println("1: Address = " + property.getAddress());
+            System.out.println("2: Year Of Construction = " + property.getYearOfConstruction());
+            System.out.println("3: Property Type = " + property.getTypeOfProperty());
+
+            System.out.println("Please enter one of these numbers to update the field or any other number to finish the update...");
+            choice = Integer.parseInt(scanner.next());
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Please enter the Address of the Property:");
+                    String address = scanner.next();
+                    property.setAddress(address);
+                    System.out.println("Address updated...");
+                    break;
+                case 2:
+                    System.out.println("Please enter the Year Of Construction of the Property:");
+                    int yoc = Integer.parseInt(scanner.next());
+                    property.setYearOfConstruction(yoc);
+                    System.out.println("Year Of Construction updated...");
+                    break;
+                case 3:
+                    System.out.println("What type of Property is this?");
+                    System.out.println("""
+                                          Select:
+                                          1: For Detached House...
+                                          2: For Maisonette...
+                                          3: For Apartment Building
+                                          """);
+                    int pType = Integer.parseInt(scanner.next());
+                    PropertyType type = switch (pType) {
+                        case 1 ->
+                            PropertyType.DETACHED_HOUSE;
+                        case 2 ->
+                            PropertyType.MAISONETTE;
+                        default ->
+                            PropertyType.APARTMENT_BUILDING;
+                    };
+                    property.setTypeOfProperty(type);
+                    System.out.println("Property Type updated...");
+                    break;
+                default:
+                    System.out.println("Saving changes......");
+                    break;
+            }
+        } while (choice > 3 || choice < 1);
+
+        return property;
     }
 }

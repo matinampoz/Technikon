@@ -35,15 +35,7 @@ public class PropertyServiceImpl implements PropertyService {
         propertyRepository.save(property);
         return property.getE9();
     }
-    
-    @Override
-    //TODO: implement with UI
-    public Property updateProperty(Property propertyToUpdate) {
 
-        /*call UI*/
-        return propertyToUpdate;
-    }
-    
     @Override
     public boolean deleteProperty(Long id) {
         return propertyRepository.deleteById(id);
