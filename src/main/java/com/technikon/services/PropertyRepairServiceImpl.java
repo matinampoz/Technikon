@@ -1,14 +1,13 @@
 package com.technikon.services;
 
 import com.technikon.models.Property;
-import com.technikon.models.PropertyOwner;
 import com.technikon.models.PropertyRepair;
 import com.technikon.repositories.PropertyRepairRepository;
 import enums.RepairStatus;
 import enums.RepairType;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PropertyRepairServiceImpl implements PropertyRepairService {
 
@@ -22,7 +21,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     public PropertyRepair createPropertyRepair(Property property, RepairType typeOfRepair, String submissionDate,
             String shortDescription, String workDescription,
             String proposedStartDate, String proposedEndDate,
-            double proposedCost) {
+            double proposedCost,boolean ownerAcceptance) {
 
         PropertyRepair repair = PropertyRepair.builder()
                 .property(property)
@@ -33,6 +32,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 .proposedStartDate(proposedStartDate)
                 .proposedEndDate(proposedEndDate)
                 .proposedCost(proposedCost)
+                .ownerAcceptance(ownerAcceptance)
                 .status(RepairStatus.PENDING)
                 .build();
         return repair;
@@ -73,5 +73,20 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     @Override
     public List<PropertyRepair> searchPropertyRepairsByOwnerId(Long ownerId) {
         return propertyRepairRepository.findByOwnerId(ownerId);
+    }
+
+    @Override
+    public List<PropertyRepair> getOwnerRepairs(String ownerVAT) {
+        return getPropertyRepairs().stream()
+                .filter(repair -> repair.getProperty().getPropertyOwner().getVatNumber().equals(ownerVAT))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PropertyRepair> getUnansweredOwnerRepairs(String ownerVAT) {
+        return getPropertyRepairs().stream()
+                .filter(repair -> repair.getProperty().getPropertyOwner().getVatNumber().equals(ownerVAT))
+                .filter(repair -> !repair.isOwnerAcceptance())
+                .collect(Collectors.toList());
     }
 }

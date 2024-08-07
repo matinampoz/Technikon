@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
 public class Main {
@@ -85,27 +86,30 @@ public class Main {
 //        System.out.println("--------------DELETE BY ID PROPERTY--------");
 //        propertyService.deleteProperty(1L);
 //        System.out.println("---------------DELETE BY ID RESULT-----------");
-
 //        System.out.println("--------------FIND PROPERTY BY VAT PROPERTY-------------");
 //        List<Property> allProperty= propertyService.findPropertiesByVAT(ownerVat);
 //        System.out.println(allProperty);
 //        System.out.println("------------------FIND PROPERTY BY VAT RESULT----------------");
-
 //        System.out.println("--------------FIND PROPERTY BY ID PROPERTY-------------");
 //        System.out.println(propertyService.findPropertyByID(1L));
 //        System.out.println("--------------FIND PROPERTY BY ID RESULT-------------");
-
 //        System.out.println("--------------FIND PROPERTY BY E9 PROPERTY-------------");
 //        System.out.println(propertyService.findPropertyByE9("A001"));
 //        System.out.println("--------------FIND PROPERTY BY E9 RESULT-------------");
-
         System.out.println("-------------ONTO PROPERTY REPAIR CREATION");
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String timestamp = now.format(formatter);
-        PropertyRepair repair = propertyRepairService.createPropertyRepair(property, RepairType.FRAMES, timestamp,
-                "Wdesc", "12/5/98",
-                "Aurio", "Paraskeuh", 1000);
+        PropertyRepair repair = propertyRepairService.createPropertyRepair(
+                property,
+                RepairType.FRAMES,
+                timestamp,
+                "Wdesc",
+                "12/5/98",
+                "Aurio",
+                "Paraskeuh",
+                1000,
+                false);
 
         propertyRepairService.savePropertyRepair(repair);
         System.out.println("----------------REPAIR CREATED AND SAVED-----------------------------");
@@ -132,6 +136,13 @@ public class Main {
 //        List<PropertyRepair> findByIdRepair = propertyRepairService.searchPropertyRepairsByOwnerId(1L);
 //        findByIdRepair.forEach(System.out::println);
 //        System.out.println("--------------FIND BY OWNER ID RESULT--------------------");
+//        System.out.println("----------------------- GET REPAIRS BY OWNER VAT-------------------");
+//        List<PropertyRepair> findRepairOwnersByVat = propertyRepairService.getOwnerRepairs("123456789");
+//        System.out.println("---------------------GET REPAIRS BY OWNER VAT RESULT");
+//
+//        System.out.println("---------------------GET UNANSWERED REPAIRS BY OWNER VAT-------------------------");
+//        List<PropertyRepair> findUnansweredRepairOwnersByVat = propertyRepairService.getUnansweredOwnerRepairs("123456789");
+//        System.out.println("----------------------GET UNANSWERED REPAIRS BY OWNER VAT RESULT------------------------------------");
 //        try {
         //            // Save PropertyRepair
         //            Long repairId = propertyRepairService.savePropertyRepair(repair);
@@ -156,5 +167,8 @@ public class Main {
         //            em.close();
         ////            emf.close();
         //        }
+        System.out.println("----------------------- GET REPAIRS BY OWNER VAT-------------------");
+
+        System.out.println("---------------------GET REPAIRS BY OWNER VAT RESULT");
     }
 }
