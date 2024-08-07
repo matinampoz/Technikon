@@ -1,6 +1,5 @@
 package com.technikon;
 
-import com.technikon.exceptions.PropertyException;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
 import com.technikon.models.PropertyRepair;
@@ -11,18 +10,17 @@ import enums.PropertyType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 public class PropertyServiceTest {
 
-    //@Mock
+    @Mock
     private PropertyRepository propertyRepository;
 
     //testData
@@ -30,19 +28,19 @@ public class PropertyServiceTest {
     PropertyOwner testOwner2;
     List<Property> testProperties;
 
-//    @InjectMocks
+    @InjectMocks
     private PropertyService propertyService;
 
     @BeforeEach
     public void setUp() {
         // mockito initialization
-        //MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);
         propertyService = Mockito.mock(PropertyServiceImpl.class);
         
         testOwner1 = new PropertyOwner();
-        testOwner1.setVatNumber(0123L);
+        testOwner1.setVatNumber("0123");
         testOwner2 = new PropertyOwner();
-        testOwner2.setVatNumber(0124L);
+        testOwner2.setVatNumber("0124");
         testProperties = Arrays.asList(
                 new Property(0L, "E99", "KP 33", 2006, PropertyType.MAISONETTE, testOwner1, new ArrayList<PropertyRepair>()),
                 new Property(1L, "E98", "KP 34", 2010, PropertyType.APARTMENT_BUILDING, testOwner1, new ArrayList<PropertyRepair>()),

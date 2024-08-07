@@ -1,13 +1,11 @@
 package com.technikon.UI;
 
 import com.technikon.models.Property;
-import com.technikon.models.PropertyOwner;
-import com.technikon.models.PropertyRepair;
-import java.util.List;
+import java.util.Optional;
 
 public interface User {
 
-    Property addNewProperty();
+    Optional<Property> addNewProperty();
     
     void deleteProperty();
 

@@ -1,6 +1,7 @@
 package com.technikon.UI;
 
 import com.technikon.exceptions.OwnerException;
+import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
@@ -13,6 +14,8 @@ import com.technikon.services.PropertyServiceImpl;
 import enums.PropertyType;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FrontEnd {
 
@@ -72,7 +75,11 @@ public class FrontEnd {
         System.out.println("Now let's enter the Owner's first 2 Properties!");
         for (int i = 0; i < 2; i++) {
             System.out.println("Please enter the details of the Property " + (i + 1) + " :");
-            createNewProperty(newOwner);
+            try {
+                createNewProperty(newOwner);
+            } catch (PropertyException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         ownerService.saveOwner(newOwner);
         System.out.println("Property Owner " + newOwner.getName() + " " + newOwner.getSurname() + " CREATED!");
@@ -83,7 +90,7 @@ public class FrontEnd {
      * The static method createNewProperty is called to create and save a new
      * property .
      */
-    public static Property createNewProperty(PropertyOwner owner) {
+    public static Property createNewProperty(PropertyOwner owner) throws PropertyException {
         //initialize property repository and service
         PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
         PropertyService propertyService = new PropertyServiceImpl(pRep);
