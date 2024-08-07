@@ -60,7 +60,7 @@ public class OwnerUI implements User {
         PropertyRepairRepository rRep = new PropertyRepairRepository(JpaUtil.getEntityManager());
         PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(rRep);
         List<PropertyRepair> repairs = propertyRepairService.getPropertyRepairs();
-        List<PropertyRepair> myRepairs = repairs.stream().filter(repair -> repair.getOwner().getVatNumber().equals(owner.getVatNumber()))
+        List<PropertyRepair> myRepairs = repairs.stream().filter(repair -> repair.getProperty().getPropertyOwner().getVatNumber().equals(owner.getVatNumber()))
                 .collect(Collectors.toList());
         myRepairs.stream().forEach(System.out::println);
     }
