@@ -39,6 +39,11 @@ public class OwnerUI implements User {
     public Property addNewProperty() {
         return FrontEnd.createNewProperty(owner);
     }
+    
+    @Override
+    public void deleteProperty() {
+        
+    }
 
     /**
      * This method reports on the Properties Linked to the Owner
@@ -203,4 +208,5 @@ public class OwnerUI implements User {
         propertyService.saveProperty(FrontEnd.updatProperty(propertyFound.get()));
         System.out.println("UPDATED PROPERTY SUCCESSFULLY!!!");
     }
+
 }

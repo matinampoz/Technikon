@@ -8,6 +8,8 @@ import java.util.List;
 public interface User {
 
     Property addNewProperty();
+    
+    void deleteProperty();
 
     void showProperties();
 
