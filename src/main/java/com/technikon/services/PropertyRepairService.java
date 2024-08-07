@@ -18,6 +18,10 @@ public interface PropertyRepairService {
 
     List<PropertyRepair> getPropertyRepairs();
 
+    List<PropertyRepair> getOwnerRepairs(String ownerVAT);
+
+    List<PropertyRepair> getUnansweredOwnerRepairs(String ownerVAT);
+
     PropertyRepair updatePropertyRepair(PropertyRepair propertyRepair);
 
     void deletePropertyRepair(Long id);

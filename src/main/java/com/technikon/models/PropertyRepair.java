@@ -2,7 +2,6 @@ package com.technikon.models;
 
 import enums.RepairStatus;
 import enums.RepairType;
-import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;

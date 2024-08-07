@@ -2,7 +2,6 @@ package com.technikon.repositories;
 
 import com.technikon.exceptions.PropertyRepairException;
 import com.technikon.models.PropertyRepair;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -93,6 +92,17 @@ public class PropertyRepairRepository implements Repository<PropertyRepair, Long
             return query.getResultList();
         } catch (Exception e) {
             throw new PropertyRepairException("Failed to find PropertyRepairs by owner id: " + ownerId, e);
+        }
+    }
+
+    public List<PropertyRepair> findByOwnerVAT(String ownerVAT) {
+        try {
+            TypedQuery<PropertyRepair> query = entityManager.createQuery(
+                    "SELECT r FROM PropertyRepair r WHERE r.owner.vatNumber = :ownerVAT", PropertyRepair.class);
+            query.setParameter("ownerVAT", ownerVAT);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PropertyRepairException("Failed to find PropertyRepairs by owner VAT: " + ownerVAT, e);
         }
     }
 
