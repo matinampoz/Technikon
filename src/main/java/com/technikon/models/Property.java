@@ -45,38 +45,7 @@ public class Property {
     private List<PropertyRepair> repairs;
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Property other = (Property) obj;
-        if (this.propertyId != other.propertyId) {
-            return false;
-        }
-        if (this.yearOfConstruction != other.yearOfConstruction) {
-            return false;
-        }
-        if (!Objects.equals(this.e9, other.e9)) {
-            return false;
-        }
-        if (!Objects.equals(this.address, other.address)) {
-            return false;
-        }
-        if (this.typeOfProperty != other.typeOfProperty) {
-            return false;
-        }
-        if (!Objects.equals(this.propertyOwner, other.propertyOwner)) {
-            return false;
-        }
-        return Objects.equals(this.repairs, other.repairs);
+    public String toString() {
+        return "Property{" + " Ε9=" + e9 + ", Αddress=" + address + ", Υear Of Construction=" + yearOfConstruction + ", Τype Of Property=" + typeOfProperty + '}';
     }
-    
-    
-    
 }

@@ -18,13 +18,8 @@ public interface PropertyService {
      * The method saveProperty gets a Property object, saves it to the database
      * and returns its E9
      */
+
     String saveProperty(Property property) throws PropertyException ;
-    
-    /**
-     * The method updateProperty gets a Property object, calls the UI to update
-     * its values and returns it updated
-     */
-    Property updateProperty(Property propertyToUpdate);
     
     /**
      * The method deleteProperty gets a property's id and calls the property

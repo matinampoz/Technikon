@@ -6,12 +6,17 @@ import com.technikon.models.PropertyRepair;
 import java.util.List;
 
 public interface User {
+
+    Property addNewProperty();
+
+    void showProperties();
+
+    void showRepairs();
+
+    void displayOnSelection();
+
+    void getReport();
     
-    PropertyOwner createNewOwner();
-    Property createNewProperty();
-    PropertyRepair createNewPropertyRepair();
-    List<Property> getProperties();
-    List<PropertyRepair> getRepairs();
-    int getAction();
-    
+    void UserMenu();
+
 }

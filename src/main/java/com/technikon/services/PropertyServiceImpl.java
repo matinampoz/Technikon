@@ -43,14 +43,6 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    //TODO: implement with UI
-    public Property updateProperty(Property propertyToUpdate) {
-
-        /*call UI*/
-        return propertyToUpdate;
-    }
-
-    @Override
     public boolean deleteProperty(Long id) {
         return propertyRepository.deleteById(id);
     }
