@@ -261,7 +261,7 @@ public class OwnerUI implements User {
         List<PropertyRepair> repairs = propertyRepairService.getUnansweredOwnerRepairs(owner.getVatNumber());
 
         if (repairs.size() == 0) {
-            System.out.println("NO REPAIRS REGISTERED!");
+            System.out.println("NO PENDING REPAIRS REGISTERED!");
         } else {
             for (int i = 0; i < repairs.size(); i++) {
                 System.out.println((i + 1) + ": " + repairs.get(i));
@@ -272,7 +272,7 @@ public class OwnerUI implements User {
             do {
                 System.out.println("Which repair would you like to verify?(Enter one of the numbers above...)");
                 choice = Integer.parseInt(scanner.next());
-            } while (choice > 1 || choice < repairs.size());
+            } while (choice > 0 && choice < repairs.size());
 
             choice--;//matching the list's indexes
             PropertyRepair repairToAnswer = repairs.get(choice);
