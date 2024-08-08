@@ -242,7 +242,7 @@ public class FrontEnd {
         return propertyRepairService.createPropertyRepair(property, repairType, submissionDate, shortDescription, workDescription, proposedStartDate, proposedEndDate, proposedCost, false);
     }
 
-    static void updateRepair(PropertyRepair repair) {
+    static PropertyRepair updateRepair(PropertyRepair repair) {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
@@ -355,5 +355,7 @@ public class FrontEnd {
                     break;
             }
         } while (choice > 7 || choice < 1);
+        
+        return repair;
     }
 }

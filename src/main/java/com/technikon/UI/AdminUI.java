@@ -115,7 +115,8 @@ public class AdminUI implements User {
         
         choice--;//matching the list's indexes
         PropertyRepair repairToUpdate = repairs.get(choice);
-        FrontEnd.updateRepair(repairToUpdate);  //call the fronted to communicate with the user and update the repair
+        repairToUpdate = FrontEnd.updateRepair(repairToUpdate);  //call the fronted to communicate with the user and update the repair
+        propertyRepairService.savePropertyRepair(repairToUpdate);//save the changes
     }
 
 }
