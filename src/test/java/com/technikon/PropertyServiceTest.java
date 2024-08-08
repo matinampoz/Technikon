@@ -1,12 +1,12 @@
 package com.technikon;
 
+import com.technikon.enums.PropertyType;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
 import com.technikon.models.PropertyRepair;
 import com.technikon.repositories.PropertyRepository;
 import com.technikon.services.PropertyService;
 import com.technikon.services.PropertyServiceImpl;
-import enums.PropertyType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +36,7 @@ public class PropertyServiceTest {
         // mockito initialization
         MockitoAnnotations.openMocks(this);
         propertyService = Mockito.mock(PropertyServiceImpl.class);
-        
+
         testOwner1 = new PropertyOwner();
         testOwner1.setVatNumber("0123");
         testOwner2 = new PropertyOwner();

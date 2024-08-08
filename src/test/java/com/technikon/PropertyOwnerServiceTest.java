@@ -19,8 +19,6 @@ import static org.mockito.Mockito.*;
 
 public class PropertyOwnerServiceTest {
 
-
-
     @Mock
     private EntityManager entityManager;
 
@@ -123,7 +121,7 @@ public class PropertyOwnerServiceTest {
     }
 
     @Test
-    public void testSearchOwnerByVatNumber() throws OwnerException{
+    public void testSearchOwnerByVatNumber() throws OwnerException {
         PropertyOwner propertyOwner = PropertyOwner.builder()
                 .vatNumber("987654321")
                 .name("Jeff")
@@ -192,7 +190,7 @@ public class PropertyOwnerServiceTest {
 
         verify(ownerRepository, times(1)).save(propertyOwner);
     }
-*/
+     */
     @Test
     public void testDeleteOwner() throws OwnerException {
         Long ownerId = 1L;
