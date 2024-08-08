@@ -173,23 +173,23 @@ public class Main {
 //
 //        System.out.println("---------------------GET REPAIRS BY OWNER VAT RESULT");
 
-//        System.out.println("-----------------------!!!WELCOME TO TECHNIKON!!!-----------------------\n");
-//        User user;
-//        System.out.println("Would you like to use the application as a Property Owner(P) or as ans Administrator(A)?");
-//        Scanner scanner = new Scanner(System.in);
-//        String ans = scanner.next();
-//        if (ans.toUpperCase().equals("A") || ans.toUpperCase().equals("ADMIN") || ans.toUpperCase().equals("ADMINISTRATOR")) {
-//            System.out.println("Sign In as Administrator...");
-//            user = new AdminUI();
-//        }else{
-//            System.out.println("Sign In as Property Owner...");
-//            OwnerUI ownerUser = new OwnerUI();
-//            PropertyOwner signedInOwner = ownerUser.signIn();
-//            ownerUser.setOwner(signedInOwner);
-//            user = ownerUser;
-//        }
-//        user.UserMenu();
-//        System.out.println("\n------------------------APPLICATION TERMINATING------------------------");
-//        System.out.println("Have a nice day!");
+        System.out.println("-----------------------!!!WELCOME TO TECHNIKON!!!-----------------------\n");
+        User user;
+        System.out.println("Would you like to use the application as a Property Owner(P) or as ans Administrator(A)?");
+        Scanner scanner = new Scanner(System.in);
+        String ans = scanner.next();
+        if (ans.toUpperCase().equals("A") || ans.toUpperCase().equals("ADMIN") || ans.toUpperCase().equals("ADMINISTRATOR")) {
+            System.out.println("Sign In as Administrator...");
+            user = new AdminUI();
+        }else{
+            System.out.println("Sign In as Property Owner...");
+            OwnerUI ownerUser = new OwnerUI();
+            PropertyOwner signedInOwner = ownerUser.signIn();
+            ownerUser.setOwner(signedInOwner);
+            user = ownerUser;
+        }
+        user.UserMenu();
+        System.out.println("\n------------------------APPLICATION TERMINATING------------------------");
+        System.out.println("Have a nice day!");
     }
 }
