@@ -260,9 +260,10 @@ public class OwnerUI implements User {
         //get Owner's unanswered repairs
         List<PropertyRepair> repairs = propertyRepairService.getUnansweredOwnerRepairs(owner.getVatNumber());
 
-        if (repairs.size() == 0) {
+        if (repairs.size() == 0) {//if there are no unanswered Repairs inform the Owner
             System.out.println("NO PENDING REPAIRS REGISTERED!");
-        } else {
+        }
+        while (repairs.size() > 0) {//while there are still unanswered Repairs
             for (int i = 0; i < repairs.size(); i++) {
                 System.out.println((i + 1) + ": " + repairs.get(i));
             }
@@ -272,12 +273,13 @@ public class OwnerUI implements User {
             do {
                 System.out.println("Which repair would you like to verify?(Enter one of the numbers above...)");
                 choice = Integer.parseInt(scanner.next());
-            } while (choice > 0 && choice < repairs.size());
+            } while (choice < 1 || choice > repairs.size());
 
             choice--;//matching the list's indexes
             PropertyRepair repairToAnswer = repairs.get(choice);
 
-            System.out.println("You chose to answer: " + repairToAnswer);
+            System.out.println("You chose to answer: " + repairToAnswer.getTypeOfRepair() + " at Property(" + repairToAnswer.getProperty().getE9() + ")");
+            System.out.println("Final Cost:" + repairToAnswer.getProposedCost());
             System.out.println("Do you ACCEPT(A) or DECLINE(D) the repair?");
             String ans = scanner.next();
             if (ans.toUpperCase().equals("A") || ans.toUpperCase().equals("ACCEPT")) {
@@ -286,13 +288,14 @@ public class OwnerUI implements User {
                 repairToAnswer.setStatus(RepairStatus.IN_PROGRESS);
                 repairToAnswer.setActualStartDate(repairToAnswer.getProposedStartDate());
                 repairToAnswer.setActualEndDate(repairToAnswer.getProposedEndDate());
-                repairs.remove(repairToAnswer);
             } else {
                 System.out.println("REPAIR DECLINED...");
                 repairToAnswer.setOwnerAcceptance(false);
                 repairToAnswer.setStatus(RepairStatus.DECLINED);
             }
+            //save the changes and remove the Repair from the Unanswered repairs
             propertyRepairService.savePropertyRepair(repairToAnswer);
+            repairs.remove(repairToAnswer);
         }
 
     }
