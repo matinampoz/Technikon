@@ -1,0 +1,5 @@
+A001,PLUMPING,Fix leaky faucet in kitchen,The kitchen faucet is leaking and needs repair,2024-08-01 09:00:00,2024-08-05 17:00:00,250,false
+B001,PAINTING,Paint exterior of the building,The exterior of the building needs a fresh coat of paint,2024-08-10 09:00:00,2024-08-15 17:00:00,1500,true
+C001,ELECTRICAL_WORK,Install new lighting fixtures,New lighting fixtures need to be installed in the living room,2024-08-12 09:00:00,2024-08-14 17:00:00,300,true
+D001,INSULATION,Add insulation to the attic,The attic needs insulation to improve energy efficiency,2024-08-15 09:00:00,2024-08-20 17:00:00,800,true
+E001,FRAMES,Repair window frames,Several window frames need repairs to prevent drafts,2024-08-20 09:00:00,2024-08-25 17:00:00,450,false
