@@ -12,12 +12,10 @@ import com.technikon.services.PropertyRepairService;
 import com.technikon.services.PropertyRepairServiceImpl;
 import com.technikon.services.PropertyService;
 import com.technikon.services.PropertyServiceImpl;
+import enums.RepairStatus;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class OwnerUI implements User {
 
@@ -53,7 +51,6 @@ public class OwnerUI implements User {
      * Property. Communicates with the User to find the property to delete and
      * informs them if the deletion was successfull.
      */
-    @Override
     public void deleteProperty() {
         //initialize property repository and service
         PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
@@ -85,7 +82,6 @@ public class OwnerUI implements User {
     /**
      * This method reports on the Properties Linked to the Owner
      */
-    @Override
     public void showProperties() {
         //initialize property repository and service
         PropertyRepository pRep = new PropertyRepository(JpaUtil.getEntityManager());
@@ -281,9 +277,13 @@ public class OwnerUI implements User {
         if (ans.toUpperCase().equals("A")||ans.toUpperCase().equals("ACCEPT")){
             System.out.println("REPAIR ACCEPTED!!!");
             repairToAnswer.setOwnerAcceptance(true);
+            repairToAnswer.setStatus(RepairStatus.IN_PROGRESS);
+            repairToAnswer.setActualStartDate(repairToAnswer.getProposedStartDate());
+            repairToAnswer.setActualEndDate(repairToAnswer.getProposedEndDate());
         }else{
             System.out.println("REPAIR DECLINED...");
             repairToAnswer.setOwnerAcceptance(false);
+            repairToAnswer.setStatus(RepairStatus.DECLINED);
         }
     }
 

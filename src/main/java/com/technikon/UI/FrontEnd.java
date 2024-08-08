@@ -5,13 +5,19 @@ import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
+import com.technikon.models.PropertyRepair;
 import com.technikon.repositories.OwnerRepository;
 import com.technikon.repositories.PropertyRepository;
 import com.technikon.services.OwnerService;
 import com.technikon.services.OwnerServiceImpl;
+import com.technikon.services.PropertyRepairService;
 import com.technikon.services.PropertyService;
 import com.technikon.services.PropertyServiceImpl;
 import enums.PropertyType;
+import enums.RepairStatus;
+import enums.RepairType;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -193,5 +199,161 @@ public class FrontEnd {
         } while (choice > 3 || choice < 1);
 
         return property;
+    }
+
+    public static PropertyRepair createNewPropertyRepair(Property property, PropertyRepairService propertyRepairService) {
+
+        //get new repair's details
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What type of Repair is this?");
+        System.out.println("""
+                                          Select:
+                                            1: For Painting...
+                                            2: For Insulation...
+                                            3: For Frames...
+                                            4: For Plumping...
+                                            5: For Electrical Work...
+                                          """);
+        int choice = Integer.parseInt(scanner.next());
+        RepairType repairType = switch (choice) {
+            case 1 ->
+                RepairType.PAINTING;
+            case 2 ->
+                RepairType.INSULATION;
+            case 3 ->
+                RepairType.FRAMES;
+            case 4 ->
+                RepairType.PLUMPING;
+            default ->
+                RepairType.ELECTRICAL_WORK;
+        };
+        String submissionDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).toString();
+        System.out.println("Please enter a short description of the Repair:");
+        String shortDescription = scanner.next();
+        System.out.println("Please enter the work description of the Repair:");
+        String workDescription = scanner.next();
+        System.out.println("Please enter the Proposed Start Date for the Repair:");
+        String proposedStartDate = scanner.next();
+        System.out.println("Please enter the Proposed End Date for the Repair:");
+        String proposedEndDate = scanner.next();
+        System.out.println("Please enter the Prospected Cost of the Repair:");
+        double proposedCost = Double.parseDouble(scanner.next());
+
+        return propertyRepairService.createPropertyRepair(property, repairType, submissionDate, shortDescription, workDescription, proposedStartDate, proposedEndDate, proposedCost, false);
+    }
+
+    static void updateRepair(PropertyRepair repair) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("Repair Details:");
+
+            System.out.println("1: Repair Type = " + repair.getTypeOfRepair());
+            System.out.println("2: Repair Description = " + repair.getShortDescription());
+            System.out.println("3: Work Description = " + repair.getWorkDescription());
+            if (repair.getStatus().equals(RepairStatus.PENDING) || repair.getStatus().equals(RepairStatus.DECLINED)) {
+                System.out.println("4: Start Date = " + repair.getProposedStartDate());
+                System.out.println("5: End Date = " + repair.getProposedEndDate());
+            } else {
+                System.out.println("4: Start Date = " + repair.getActualStartDate());
+                System.out.println("5: End Date = " + repair.getActualEndDate());
+            }
+            System.out.println("6: Cost = " + repair.getProposedCost());
+            System.out.println("7: Status = " + repair.getStatus());
+
+            System.out.println("Please enter one of these numbers to update the field or any other number to finish the update...");
+            choice = Integer.parseInt(scanner.next());
+
+            //do the update
+            switch (choice) {
+                case 1:
+                    System.out.println("""
+                                          Select:
+                                            1: For Painting...
+                                            2: For Insulation...
+                                            3: For Frames...
+                                            4: For Plumping...
+                                            5: For Electrical Work...
+                                          """);
+                    int rType = Integer.parseInt(scanner.next());
+                    RepairType repairType = switch (rType) {
+                        case 1 ->
+                            RepairType.PAINTING;
+                        case 2 ->
+                            RepairType.INSULATION;
+                        case 3 ->
+                            RepairType.FRAMES;
+                        case 4 ->
+                            RepairType.PLUMPING;
+                        default ->
+                            RepairType.ELECTRICAL_WORK;
+                    };
+                    repair.setTypeOfRepair(repairType);
+                    System.out.println("Repair Type updated...");
+                    break;
+                case 2:
+                    System.out.println("Please enter a new Repair Short Description:");
+                    String shortDescription = scanner.next();
+                    repair.setShortDescription(shortDescription);
+                    System.out.println("Short Description updated...");
+                    break;
+                case 3:
+                    System.out.println("Please enter a new Repair Work Description:");
+                    String workDescription = scanner.next();
+                    repair.setWorkDescription(workDescription);
+                    System.out.println("Work Description updated...");
+                    break;
+                case 4:
+                    if (repair.getStatus().equals(RepairStatus.PENDING) || repair.getStatus().equals(RepairStatus.DECLINED)) {
+                        System.out.println("Please propose a new Starting Date:");
+                        String psd = scanner.next();
+                        repair.setProposedStartDate(psd);
+                        if (repair.getStatus().equals(RepairStatus.DECLINED)) {
+                            repair.setStatus(RepairStatus.PENDING);
+                        }
+                    } else {
+                        System.out.println("Please a new Starting Date:");
+                        String asd = scanner.next();
+                        repair.setActualStartDate(asd);
+                    }
+                    System.out.println("Starting Date updated...");
+                    break;
+                case 5:
+                    if (repair.getStatus().equals(RepairStatus.PENDING) || repair.getStatus().equals(RepairStatus.DECLINED)) {
+                        System.out.println("Please propose a new End Date:");
+                        String ped = scanner.next();
+                        repair.setProposedEndDate(ped);
+                        if (repair.getStatus().equals(RepairStatus.DECLINED)) {
+                            repair.setStatus(RepairStatus.PENDING);
+                        }
+                    } else {
+                        System.out.println("Please a new End Date:");
+                        String aed = scanner.next();
+                        repair.setActualEndDate(aed);
+                    }
+                    System.out.println("End Date updated...");
+                    break;
+                case 6:
+                    System.out.println("Please enter the new Proposed Cost");
+                    double cost = Double.parseDouble(scanner.next());
+                    repair.setProposedCost(cost);
+                    if (repair.getStatus().equals(RepairStatus.DECLINED)) {
+                        repair.setStatus(RepairStatus.PENDING);
+                    }
+                    System.out.println("Cost updated...");
+                    break;
+                case 7:
+                    System.out.println("Is the repair complete?(Y/N)");
+                    String ans = scanner.next();
+                    if (ans.toUpperCase().equals("Y") || ans.toUpperCase().equals("YES")) {
+                        repair.setStatus(RepairStatus.COMPLETE);
+                        System.out.println("Repair marked as Complete...");
+                    }
+                    break;
+                default:
+                    System.out.println("Saving changes......");
+                    break;
+            }
+        } while (choice > 7 || choice < 1);
     }
 }
