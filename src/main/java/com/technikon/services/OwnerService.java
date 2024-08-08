@@ -2,10 +2,15 @@ package com.technikon.services;
 
 import com.technikon.exceptions.OwnerException;
 import com.technikon.models.PropertyOwner;
-
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * The OwnerService interface defines the operations available for managing PropertyOwner entities.
+ * It includes methods for creating, updating, retrieving, and deleting PropertyOwner data.
+ * This service layer interacts with the repository layer to perform business operations.
+ *
+ * @author matina
+ */
 public interface OwnerService {
     PropertyOwner createOwner(String vatNumber, String name, String surname, String address, long phoneNumber,
                               String email, String username, String password);
@@ -22,4 +27,9 @@ public interface OwnerService {
 
     List<PropertyOwner> getAllOwners();
 
+    void updateOwnerEmail(Long ownerId, String newEmail) throws OwnerException;
+
+    void updateOwnerPassword(Long ownerId, String newPassword) throws OwnerException;
+
+    void updateOwnerAddress(Long ownerId, String newAddress) throws OwnerException;
 }
