@@ -1,4 +1,4 @@
-package enums;
+package com.technikon.enums;
 
 public enum PropertyType {
     
