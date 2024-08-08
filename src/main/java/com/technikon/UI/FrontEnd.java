@@ -77,6 +77,7 @@ public class FrontEnd {
 
         //create the new owner with the given information
         PropertyOwner newOwner = ownerService.createOwner(vat, name, surname, address, phoneNumber, email, username, password);
+        System.out.println("Property Owner " + newOwner.getName() + " " + newOwner.getSurname() + " CREATED!");
         //create the owner's first 2 properties
         System.out.println("Now let's enter the Owner's first 2 Properties!");
         for (int i = 0; i < 2; i++) {
@@ -88,7 +89,6 @@ public class FrontEnd {
             }
         }
         ownerService.saveOwner(newOwner);
-        System.out.println("Property Owner " + newOwner.getName() + " " + newOwner.getSurname() + " CREATED!");
         return newOwner;
     }
 
