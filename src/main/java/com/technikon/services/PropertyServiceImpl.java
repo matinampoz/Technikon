@@ -59,10 +59,10 @@ public class PropertyServiceImpl implements PropertyService {
 //        PropertyOwner owner = ownerService.searchOwnerByVat(ownerVat);
 //        return propertyRepository.findAll(owner);
         List<Property> allProperties = propertyRepository.findAll();
-        allProperties.stream()
+        return allProperties.stream()
                 .filter(property -> property.getPropertyOwner().getVatNumber().equals(ownerVat))
                 .collect(Collectors.toList());
-        return allProperties;
+         
     }
 
     @Override

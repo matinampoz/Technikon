@@ -103,7 +103,6 @@ public class FrontEnd {
 
         //get the Property's information
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Hello!!!");
         System.out.println("Please enter Property's E9 Identification Number:");//E9
         String e9 = scanner.next();
 
