@@ -27,17 +27,6 @@ public class PropertyRepository implements Repository<Property, Long> {
         }
     }
 
-    public Optional<Property> findById(String e9) {
-        try {
-            entityManager.getTransaction().begin();
-            Property property = entityManager.find(getEntityClass(), e9);
-            entityManager.getTransaction().commit();
-            return Optional.of(property);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
     @Override
     public List<Property> findAll() {
         TypedQuery<Property> query = entityManager.createQuery("from " + getEntityClassName(), getEntityClass());

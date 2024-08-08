@@ -76,7 +76,7 @@ public class FrontEnd {
         String password = scanner.next();
 
         //create the new owner with the given information
-        PropertyOwner newOwner = ownerService.createOwner(vat, name, surname, address, 0, email, username, password);
+        PropertyOwner newOwner = ownerService.createOwner(vat, name, surname, address, phoneNumber, email, username, password);
         //create the owner's first 2 properties
         System.out.println("Now let's enter the Owner's first 2 Properties!");
         for (int i = 0; i < 2; i++) {
@@ -109,13 +109,9 @@ public class FrontEnd {
 
         System.out.println("Is this property the address of the owner (Y/N)?");//ADDRESS
         String ans = scanner.next();
-        String address;
-        if (ans.toUpperCase().equals("Y") || ans.toUpperCase().equals("YES")) {
-            address = owner.getAddress();
-        } else {
-            System.out.println("Please enter the Address of the Property:");
-            address = scanner.next();
-        }
+
+        System.out.println("Please enter the Address of the Property:");
+        String address = scanner.next();
 
         System.out.println("Please enter the Property's Year Of Construction:");//YEAR OF CONSTRUCTION
         int yearOfConstruction = Integer.parseInt(scanner.next());
@@ -355,7 +351,7 @@ public class FrontEnd {
                     break;
             }
         } while (choice > 7 || choice < 1);
-        
+
         return repair;
     }
 }
