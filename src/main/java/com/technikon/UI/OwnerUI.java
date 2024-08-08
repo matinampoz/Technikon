@@ -212,7 +212,7 @@ public class OwnerUI implements User {
                     owner = null;
                 }
             }
-        } while (owner != null); //continue untill we have a user signed in
+        } while (owner == null); //continue untill we have a user signed in
 
         return owner;
     }

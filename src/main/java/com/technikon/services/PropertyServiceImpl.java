@@ -81,7 +81,14 @@ public class PropertyServiceImpl implements PropertyService {
             System.out.println("Null property E9 was given");
             throw new InvalidParameterException();
         }
-        Optional<Property> property = propertyRepository.findById(e9);
+        Optional<Property> property;
+        List<Property> allProperties = propertyRepository.findAll();
+        List<Property> e9Properties = allProperties.stream().filter(p -> p.getE9().equals(e9)).collect(Collectors.toList());
+        if (e9Properties.size() == 0){
+            property = Optional.empty();
+        }else{
+            property = Optional.of(e9Properties.get(0));
+        }
         return property;
     }
 }
