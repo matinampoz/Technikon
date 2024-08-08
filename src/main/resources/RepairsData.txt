@@ -1,0 +1,5 @@
+123456789,'Plumbing', 'Fix leaky faucet in kitchen', 'The kitchen faucet is leaking and needs repair.', '2024-08-01 09:00:00', '2024-08-05 17:00:00','2024-08-17 17:00:00', 250.00,false
+987654321,'Painting', 'Paint exterior of the building', 'The exterior of the building needs a fresh coat of paint.', '2024-08-10 09:00:00', '2024-08-15 17:00:00','2024-08-27 17:00:00', 1500.00,true
+135792468,'Electrical work', 'Install new lighting fixtures', 'New lighting fixtures need to be installed in the living room.', '2024-08-12 09:00:00', '2024-08-14 17:00:00','2024-09-17 16:00:00', 300.00,true
+246813579,'Insulation', 'Add insulation to the attic', 'The attic needs insulation to improve energy efficiency.', '2024-08-15 09:00:00', '2024-08-20 17:00:00','2024-08-30 17:00:00', 800.00,true
+864209753,'Frames', 'Repair window frames', 'Several window frames need repairs to prevent drafts.', '2024-08-20 09:00:00', '2024-08-25 17:00:00','2024-09-10 17:00:00', 450.00,false
