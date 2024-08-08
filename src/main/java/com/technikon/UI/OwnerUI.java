@@ -272,7 +272,7 @@ public class OwnerUI implements User {
             do {
                 System.out.println("Which repair would you like to verify?(Enter one of the numbers above...)");
                 choice = Integer.parseInt(scanner.next());
-            } while (choice < 1 || choice > repairs.size());
+            } while (choice > 1 || choice < repairs.size());
 
             choice--;//matching the list's indexes
             PropertyRepair repairToAnswer = repairs.get(choice);
@@ -286,11 +286,13 @@ public class OwnerUI implements User {
                 repairToAnswer.setStatus(RepairStatus.IN_PROGRESS);
                 repairToAnswer.setActualStartDate(repairToAnswer.getProposedStartDate());
                 repairToAnswer.setActualEndDate(repairToAnswer.getProposedEndDate());
+                repairs.remove(repairToAnswer);
             } else {
                 System.out.println("REPAIR DECLINED...");
                 repairToAnswer.setOwnerAcceptance(false);
                 repairToAnswer.setStatus(RepairStatus.DECLINED);
             }
+            propertyRepairService.savePropertyRepair(repairToAnswer);
         }
 
     }
