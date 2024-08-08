@@ -41,7 +41,7 @@ public class OwnerUI implements User {
         try {
             return Optional.of(FrontEnd.createNewProperty(owner));
         } catch (PropertyException ex) {
-            System.out.println(ex.getMessage()); 
+            System.out.println(ex.getMessage());
             return Optional.empty();
         }
     }
@@ -100,6 +100,9 @@ public class OwnerUI implements User {
         PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(rRep);
         List<PropertyRepair> repairs = propertyRepairService.getOwnerRepairs(owner.getVatNumber());
         repairs.stream().forEach(System.out::println);
+        if (repairs.size() == 0) {
+            System.out.println("NO REPAIRS REGISTERED!!!");
+        }
     }
 
     /**
@@ -257,34 +260,39 @@ public class OwnerUI implements User {
         //get Owner's unanswered repairs
         List<PropertyRepair> repairs = propertyRepairService.getUnansweredOwnerRepairs(owner.getVatNumber());
 
-        for (int i = 0; i < repairs.size(); i++) {
-            System.out.println((i + 1) + ": " + repairs.get(i));
+        if (repairs.size() == 0) {
+            System.out.println("NO REPAIRS REGISTERED!");
+        } else {
+            for (int i = 0; i < repairs.size(); i++) {
+                System.out.println((i + 1) + ": " + repairs.get(i));
+            }
+            //get repair to answer
+            Scanner scanner = new Scanner(System.in);
+            int choice;
+            do {
+                System.out.println("Which repair would you like to verify?(Enter one of the numbers above...)");
+                choice = Integer.parseInt(scanner.next());
+            } while (choice < 1 || choice > repairs.size());
+
+            choice--;//matching the list's indexes
+            PropertyRepair repairToAnswer = repairs.get(choice);
+
+            System.out.println("You chose to answer: " + repairToAnswer);
+            System.out.println("Do you ACCEPT(A) or DECLINE(D) the repair?");
+            String ans = scanner.next();
+            if (ans.toUpperCase().equals("A") || ans.toUpperCase().equals("ACCEPT")) {
+                System.out.println("REPAIR ACCEPTED!!!");
+                repairToAnswer.setOwnerAcceptance(true);
+                repairToAnswer.setStatus(RepairStatus.IN_PROGRESS);
+                repairToAnswer.setActualStartDate(repairToAnswer.getProposedStartDate());
+                repairToAnswer.setActualEndDate(repairToAnswer.getProposedEndDate());
+            } else {
+                System.out.println("REPAIR DECLINED...");
+                repairToAnswer.setOwnerAcceptance(false);
+                repairToAnswer.setStatus(RepairStatus.DECLINED);
+            }
         }
-        //get repair to answer
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.println("Which repair would you like to verify?(Enter one of the numbers above...)");
-            choice = Integer.parseInt(scanner.next());
-        } while (choice < 1 || choice > repairs.size());
-        
-        choice--;//matching the list's indexes
-        PropertyRepair repairToAnswer = repairs.get(choice);
-        
-        System.out.println("You chose to answer: " + repairToAnswer);
-        System.out.println("Do you ACCEPT(A) or DECLINE(D) the repair?");
-        String ans = scanner.next();
-        if (ans.toUpperCase().equals("A")||ans.toUpperCase().equals("ACCEPT")){
-            System.out.println("REPAIR ACCEPTED!!!");
-            repairToAnswer.setOwnerAcceptance(true);
-            repairToAnswer.setStatus(RepairStatus.IN_PROGRESS);
-            repairToAnswer.setActualStartDate(repairToAnswer.getProposedStartDate());
-            repairToAnswer.setActualEndDate(repairToAnswer.getProposedEndDate());
-        }else{
-            System.out.println("REPAIR DECLINED...");
-            repairToAnswer.setOwnerAcceptance(false);
-            repairToAnswer.setStatus(RepairStatus.DECLINED);
-        }
+
     }
 
 }
