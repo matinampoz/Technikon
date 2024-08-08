@@ -1,5 +1,8 @@
 package com.technikon;
 
+import com.technikon.UI.AdminUI;
+import com.technikon.UI.OwnerUI;
+import com.technikon.UI.User;
 import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
 import com.technikon.models.Property;
@@ -15,10 +18,9 @@ import enums.PropertyType;
 import enums.RepairType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
 public class Main {
@@ -167,8 +169,27 @@ public class Main {
         //            em.close();
         ////            emf.close();
         //        }
-        System.out.println("----------------------- GET REPAIRS BY OWNER VAT-------------------");
+//        System.out.println("----------------------- GET REPAIRS BY OWNER VAT-------------------");
+//
+//        System.out.println("---------------------GET REPAIRS BY OWNER VAT RESULT");
 
-        System.out.println("---------------------GET REPAIRS BY OWNER VAT RESULT");
+        System.out.println("-----------------------!!!WELCOME TO TECHNIKON!!!-----------------------\n");
+        User user;
+        System.out.println("Would you like to use the application as a Property Owner(P) or as ans Administrator(A)?");
+        Scanner scanner = new Scanner(System.in);
+        String ans = scanner.next();
+        if (ans.toUpperCase().equals("A") || ans.toUpperCase().equals("ADMIN") || ans.toUpperCase().equals("ADMINISTRATOR")) {
+            System.out.println("Sign In as Administrator...");
+            user = new AdminUI();
+        }else{
+            System.out.println("Sign In as Property Owner...");
+            OwnerUI ownerUser = new OwnerUI();
+            PropertyOwner signedInOwner = ownerUser.signIn();
+            ownerUser.setOwner(signedInOwner);
+            user = ownerUser;
+        }
+        user.UserMenu();
+        System.out.println("\n------------------------APPLICATION TERMINATING------------------------");
+        System.out.println("Have a nice day!");
     }
 }
