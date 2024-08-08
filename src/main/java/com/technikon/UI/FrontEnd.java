@@ -77,6 +77,7 @@ public class FrontEnd {
 
         //create the new owner with the given information
         PropertyOwner newOwner = ownerService.createOwner(vat, name, surname, address, phoneNumber, email, username, password);
+        ownerService.saveOwner(newOwner);
         System.out.println("Property Owner " + newOwner.getName() + " " + newOwner.getSurname() + " CREATED!");
         //create the owner's first 2 properties
         System.out.println("Now let's enter the Owner's first 2 Properties!");
@@ -88,7 +89,6 @@ public class FrontEnd {
                 System.out.println(ex.getMessage());
             }
         }
-        ownerService.saveOwner(newOwner);
         return newOwner;
     }
 
@@ -106,9 +106,6 @@ public class FrontEnd {
         System.out.println("Hello!!!");
         System.out.println("Please enter Property's E9 Identification Number:");//E9
         String e9 = scanner.next();
-
-        System.out.println("Is this property the address of the owner (Y/N)?");//ADDRESS
-        String ans = scanner.next();
 
         System.out.println("Please enter the Address of the Property:");
         String address = scanner.next();
