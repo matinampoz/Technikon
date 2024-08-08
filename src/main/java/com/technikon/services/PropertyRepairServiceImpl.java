@@ -1,10 +1,10 @@
 package com.technikon.services;
 
+import com.technikon.enums.RepairStatus;
+import com.technikon.enums.RepairType;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyRepair;
 import com.technikon.repositories.PropertyRepairRepository;
-import enums.RepairStatus;
-import enums.RepairType;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     public PropertyRepair createPropertyRepair(Property property, RepairType typeOfRepair, String submissionDate,
             String shortDescription, String workDescription,
             String proposedStartDate, String proposedEndDate,
-            double proposedCost,boolean ownerAcceptance) {
+            double proposedCost, boolean ownerAcceptance) {
 
         PropertyRepair repair = PropertyRepair.builder()
                 .property(property)

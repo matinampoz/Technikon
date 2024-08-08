@@ -7,14 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The OwnerServiceImpl class provides the implementation for the OwnerService interface.
- * It defines methods for managing PropertyOwner entities, including creating, retrieving,
- * updating, and deleting PropertyOwners. This class interacts with the OwnerRepository
- * to perform the necessary database operations.
+ * The OwnerServiceImpl class provides the implementation for the OwnerService
+ * interface. It defines methods for managing PropertyOwner entities, including
+ * creating, retrieving, updating, and deleting PropertyOwners. This class
+ * interacts with the OwnerRepository to perform the necessary database
+ * operations.
  *
  * @author matina
  */
-public class OwnerServiceImpl implements OwnerService{
+public class OwnerServiceImpl implements OwnerService {
 
     private final OwnerRepository ownerRepository;
 
@@ -37,7 +38,7 @@ public class OwnerServiceImpl implements OwnerService{
      */
     @Override
     public PropertyOwner createOwner(String vatNumber, String name, String surname, String address, long phoneNumber,
-                              String email, String username, String password){
+            String email, String username, String password) {
 
         return PropertyOwner.builder()
                 .vatNumber(vatNumber)
@@ -78,7 +79,8 @@ public class OwnerServiceImpl implements OwnerService{
      *
      * @param email The email address of the PropertyOwner to be searched.
      * @return The PropertyOwner associated with the specified email.
-     * @throws OwnerException If the email is invalid or no owner is found with that email.
+     * @throws OwnerException If the email is invalid or no owner is found with
+     * that email.
      */
     @Override
     public PropertyOwner searchOwnerByEmail(String email) throws OwnerException {
@@ -93,11 +95,12 @@ public class OwnerServiceImpl implements OwnerService{
      *
      * @param vatNumber The VAT number of the PropertyOwner to be searched.
      * @return The PropertyOwner associated with the specified VAT number.
-     * @throws OwnerException If the VAT number is invalid or no owner is found with that VAT number.
+     * @throws OwnerException If the VAT number is invalid or no owner is found
+     * with that VAT number.
      */
     @Override
     public PropertyOwner searchOwnerByVat(String vatNumber) throws OwnerException {
-        if (vatNumber == null){
+        if (vatNumber == null) {
             throw new OwnerException("Invalid vat number");
         }
         return ownerRepository.findOwnerByVat(vatNumber);
@@ -108,34 +111,38 @@ public class OwnerServiceImpl implements OwnerService{
      *
      * @param id The ID of the PropertyOwner to be searched.
      * @return The PropertyOwner associated with the specified ID.
-     * @throws OwnerException If the ID is invalid or no owner is found with that ID.
+     * @throws OwnerException If the ID is invalid or no owner is found with
+     * that ID.
      * @throws NumberFormatException If the ID cannot be parsed to a Long.
      */
     @Override
-    public PropertyOwner searchOwnerById(String id) throws OwnerException, NumberFormatException{
-            if (id == null) {
-                throw new OwnerException("Invalid id");
-            }
-            Long ownerId = Long.parseLong(id);
-            Optional<PropertyOwner> owner = ownerRepository.findById(ownerId);
-            if (owner.isPresent()){
-                return owner.get();
+    public PropertyOwner searchOwnerById(String id) throws OwnerException, NumberFormatException {
+        if (id == null) {
+            throw new OwnerException("Invalid id");
         }
-            throw new OwnerException("id not found");
+        Long ownerId = Long.parseLong(id);
+        Optional<PropertyOwner> owner = ownerRepository.findById(ownerId);
+        if (owner.isPresent()) {
+            return owner.get();
+        }
+        throw new OwnerException("id not found");
     }
 
     /**
      * Deletes a PropertyOwner by their ID.
      *
      * @param id The ID of the PropertyOwner to be deleted.
-     * @return true if the PropertyOwner was successfully deleted, false otherwise.
-     * @throws OwnerException If the ID is invalid or the owner cannot be deleted.
+     * @return true if the PropertyOwner was successfully deleted, false
+     * otherwise.
+     * @throws OwnerException If the ID is invalid or the owner cannot be
+     * deleted.
      * @throws NumberFormatException If the ID cannot be parsed to a Long.
      */
     @Override
-    public Boolean deleteOwner(String id) throws OwnerException, NumberFormatException{
-        if (id == null){
-            throw new OwnerException("Invalid id");}
+    public Boolean deleteOwner(String id) throws OwnerException, NumberFormatException {
+        if (id == null) {
+            throw new OwnerException("Invalid id");
+        }
         Long ownerId = Long.parseLong(id);
         return ownerRepository.deleteById(ownerId);
     }
@@ -143,9 +150,11 @@ public class OwnerServiceImpl implements OwnerService{
     /**
      * Updates the address of an existing PropertyOwner.
      *
-     * @param ownerId The ID of the PropertyOwner whose address is to be updated.
+     * @param ownerId The ID of the PropertyOwner whose address is to be
+     * updated.
      * @param newAddress The new address to be set for the PropertyOwner.
-     * @throws OwnerException If the owner cannot be found or the new address is invalid.
+     * @throws OwnerException If the owner cannot be found or the new address is
+     * invalid.
      */
     @Override
     public void updateOwnerAddress(Long ownerId, String newAddress) throws OwnerException {
@@ -164,7 +173,8 @@ public class OwnerServiceImpl implements OwnerService{
      *
      * @param ownerId The ID of the PropertyOwner whose email is to be updated.
      * @param newEmail The new email address to be set for the PropertyOwner.
-     * @throws OwnerException If the owner cannot be found or the new email is invalid.
+     * @throws OwnerException If the owner cannot be found or the new email is
+     * invalid.
      */
     @Override
     public void updateOwnerEmail(Long ownerId, String newEmail) throws OwnerException {
@@ -184,9 +194,11 @@ public class OwnerServiceImpl implements OwnerService{
     /**
      * Updates the password of an existing PropertyOwner.
      *
-     * @param ownerId The ID of the PropertyOwner whose password is to be updated.
+     * @param ownerId The ID of the PropertyOwner whose password is to be
+     * updated.
      * @param newPassword The new password to be set for the PropertyOwner.
-     * @throws OwnerException If the owner cannot be found or the new password is invalid.
+     * @throws OwnerException If the owner cannot be found or the new password
+     * is invalid.
      */
     @Override
     public void updateOwnerPassword(Long ownerId, String newPassword) throws OwnerException {

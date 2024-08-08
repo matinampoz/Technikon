@@ -1,5 +1,8 @@
 package com.technikon.UI;
 
+import com.technikon.enums.PropertyType;
+import com.technikon.enums.RepairStatus;
+import com.technikon.enums.RepairType;
 import com.technikon.exceptions.OwnerException;
 import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
@@ -13,15 +16,10 @@ import com.technikon.services.OwnerServiceImpl;
 import com.technikon.services.PropertyRepairService;
 import com.technikon.services.PropertyService;
 import com.technikon.services.PropertyServiceImpl;
-import enums.PropertyType;
-import enums.RepairStatus;
-import enums.RepairType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FrontEnd {
 

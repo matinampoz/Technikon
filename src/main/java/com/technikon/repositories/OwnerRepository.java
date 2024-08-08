@@ -1,4 +1,3 @@
-
 package com.technikon.repositories;
 
 import com.technikon.models.PropertyOwner;
@@ -8,8 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- * The OwnerRepository class provides CRUD operations for PropertyOwner entities.
- * This class serves as a repository layer between the service layer and the database.
+ * The OwnerRepository class provides CRUD operations for PropertyOwner
+ * entities. This class serves as a repository layer between the service layer
+ * and the database.
  *
  * @author matina
  */
@@ -25,12 +25,15 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
      * Finds a PropertyOwner by their ID.
      *
      * @param id The ID of the PropertyOwner to be retrieved.
-     * @return An Optional containing the PropertyOwner if found, or an empty Optional if not.
+     * @return An Optional containing the PropertyOwner if found, or an empty
+     * Optional if not.
      */
     @Override
     public Optional<PropertyOwner> findById(Long id) {
         PropertyOwner propertyOwner = entityManager.find(PropertyOwner.class, id);
-        if (propertyOwner == null) return Optional.empty();
+        if (propertyOwner == null) {
+            return Optional.empty();
+        }
         return Optional.of(propertyOwner);
     }
 
@@ -50,7 +53,8 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
      * Saves a new PropertyOwner or updates an existing one in the database.
      *
      * @param t The PropertyOwner to be saved or updated.
-     * @return An Optional containing the saved PropertyOwner if successful, or an empty Optional if not.
+     * @return An Optional containing the saved PropertyOwner if successful, or
+     * an empty Optional if not.
      */
     @Override
     public Optional<PropertyOwner> save(PropertyOwner t) {
@@ -69,13 +73,14 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
      * Deletes a PropertyOwner by their ID.
      *
      * @param id The ID of the PropertyOwner to be deleted.
-     * @return true if the PropertyOwner was successfully deleted, false otherwise.
+     * @return true if the PropertyOwner was successfully deleted, false
+     * otherwise.
      */
     @Override
     public boolean deleteById(Long id) {
         PropertyOwner propertyOwner = entityManager.find(PropertyOwner.class, id);
         if (propertyOwner != null) {
-            try{
+            try {
                 entityManager.getTransaction().begin();
                 entityManager.remove(propertyOwner);
                 entityManager.getTransaction().commit();
@@ -94,7 +99,7 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
      * @param email The email address of the PropertyOwner to be retrieved.
      * @return The PropertyOwner with the specified email address.
      */
-    public PropertyOwner findOwnerByEmail(String email){
+    public PropertyOwner findOwnerByEmail(String email) {
         TypedQuery<PropertyOwner> typedQuery = entityManager.createQuery("from PropertyOwner where email =: data", PropertyOwner.class);
         typedQuery.setParameter("data", email);
         return typedQuery.getSingleResult();
@@ -106,7 +111,7 @@ public class OwnerRepository implements Repository<PropertyOwner, Long> {
      * @param vat The VAT number of the PropertyOwner to be retrieved.
      * @return The PropertyOwner with the specified VAT number.
      */
-    public PropertyOwner findOwnerByVat(String vat){
+    public PropertyOwner findOwnerByVat(String vat) {
         TypedQuery<PropertyOwner> typedQuery = entityManager.createQuery("from PropertyOwner where vat =: data", PropertyOwner.class);
         typedQuery.setParameter("data", vat);
         return typedQuery.getSingleResult();

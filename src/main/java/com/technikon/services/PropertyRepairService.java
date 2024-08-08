@@ -1,10 +1,8 @@
 package com.technikon.services;
 
+import com.technikon.enums.RepairType;
 import com.technikon.models.Property;
-import com.technikon.models.PropertyOwner;
 import com.technikon.models.PropertyRepair;
-import enums.RepairType;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PropertyRepairService {
@@ -12,7 +10,7 @@ public interface PropertyRepairService {
     PropertyRepair createPropertyRepair(Property property, RepairType typeOfRepair,
             String shortDescription, String workDescription, String submissionDate,
             String proposedStartDate, String proposedEndDate,
-            double proposedCost,boolean ownerAcceptance);
+            double proposedCost, boolean ownerAcceptance);
 
     Long savePropertyRepair(PropertyRepair propertyRepair);
 

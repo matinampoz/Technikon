@@ -1,7 +1,7 @@
 package com.technikon.models;
 
-import enums.RepairStatus;
-import enums.RepairType;
+import com.technikon.enums.RepairStatus;
+import com.technikon.enums.RepairType;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;

@@ -1,7 +1,6 @@
 package com.technikon.repositories;
 
 import com.technikon.models.Property;
-import com.technikon.models.PropertyOwner;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -34,7 +33,8 @@ public class PropertyRepository implements Repository<Property, Long> {
     }
 
     /**
-     * Returns a List<Properties> with all the properties that the given owner has.
+     * Returns a List<Properties> with all the properties that the given owner
+     * has.
      */
 //    public List<Property> findAll(PropertyOwner owner) {
 //        TypedQuery<Property> query = entityManager.createQuery("from " + getEntityClassName()
@@ -42,7 +42,6 @@ public class PropertyRepository implements Repository<Property, Long> {
 //                 getEntityClass());
 //        return query.getResultList();
 //    }
-
     @Override
     public Optional<Property> save(Property property) {
         try {

@@ -1,5 +1,6 @@
 package com.technikon.UI;
 
+import com.technikon.enums.RepairStatus;
 import com.technikon.exceptions.OwnerException;
 import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
@@ -12,7 +13,6 @@ import com.technikon.services.PropertyRepairService;
 import com.technikon.services.PropertyRepairServiceImpl;
 import com.technikon.services.PropertyService;
 import com.technikon.services.PropertyServiceImpl;
-import enums.RepairStatus;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;

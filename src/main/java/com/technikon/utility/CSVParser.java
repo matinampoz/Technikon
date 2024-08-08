@@ -1,5 +1,7 @@
 package com.technikon.utility;
 
+import com.technikon.enums.PropertyType;
+import com.technikon.enums.RepairType;
 import com.technikon.exceptions.PropertyException;
 import com.technikon.jpa.JpaUtil;
 import com.technikon.models.Property;
@@ -14,8 +16,6 @@ import com.technikon.services.PropertyRepairService;
 import com.technikon.services.PropertyRepairServiceImpl;
 import com.technikon.services.PropertyService;
 import com.technikon.services.PropertyServiceImpl;
-import enums.PropertyType;
-import enums.RepairType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;

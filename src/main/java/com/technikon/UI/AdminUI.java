@@ -85,12 +85,12 @@ public class AdminUI implements User {
                 System.out.println("Please enter an existing E9 ............");
             }
         } while (propertyToRepair.isEmpty());   //untill repair found
-        
+
         //initialize property reapairs repository and service
         PropertyRepairRepository rRep = new PropertyRepairRepository(JpaUtil.getEntityManager());
         PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(rRep);
         //send to UI to get repair details
-        PropertyRepair repair = FrontEnd.createNewPropertyRepair(propertyToRepair.get(),propertyRepairService);
+        PropertyRepair repair = FrontEnd.createNewPropertyRepair(propertyToRepair.get(), propertyRepairService);
         propertyRepairService.savePropertyRepair(repair);
         System.out.println("REPAIR SUBMITTED SUCCESSFULLY!!!");
     }
@@ -101,7 +101,7 @@ public class AdminUI implements User {
         PropertyRepairService propertyRepairService = new PropertyRepairServiceImpl(rRep);
         //get Owner's unanswered repairs
         List<PropertyRepair> repairs = propertyRepairService.getPropertyRepairs();
-        
+
         for (int i = 0; i < repairs.size(); i++) {
             System.out.println((i + 1) + ": " + repairs.get(i));
         }
@@ -112,7 +112,7 @@ public class AdminUI implements User {
             System.out.println("Which repair would you like to update?");
             choice = Integer.parseInt(scanner.next());
         } while (choice < 1 || choice > repairs.size());
-        
+
         choice--;//matching the list's indexes
         PropertyRepair repairToUpdate = repairs.get(choice);
         repairToUpdate = FrontEnd.updateRepair(repairToUpdate);  //call the fronted to communicate with the user and update the repair

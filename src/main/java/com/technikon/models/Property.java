@@ -1,8 +1,7 @@
 package com.technikon.models;
 
-import enums.PropertyType;
+import com.technikon.enums.PropertyType;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,23 +23,24 @@ import lombok.Setter;
 @Builder
 @Entity
 public class Property {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long propertyId;
-    
+
     @Column(unique = true, nullable = false)
     private String e9;
-    
+
     private String address;
-    
+
     private int yearOfConstruction;
-    
+
     private PropertyType typeOfProperty;
-    
+
     @ManyToOne
     @JoinColumn(referencedColumnName = "ownerId")
     private PropertyOwner propertyOwner;
-    
+
     @OneToMany(mappedBy = "property")
     private List<PropertyRepair> repairs;
 

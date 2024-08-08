@@ -1,10 +1,10 @@
 package com.technikon.services;
 
+import com.technikon.enums.PropertyType;
 import com.technikon.exceptions.PropertyException;
 import com.technikon.models.Property;
 import com.technikon.models.PropertyOwner;
 import com.technikon.repositories.PropertyRepository;
-import enums.PropertyType;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
@@ -13,14 +13,13 @@ import java.util.stream.Collectors;
 public class PropertyServiceImpl implements PropertyService {
 
     private PropertyRepository propertyRepository;
-    
+
     public PropertyServiceImpl(PropertyRepository propertyRepository) {
         this.propertyRepository = propertyRepository;
     }
 
     @Override
     public Property createProperty(String e9, String address, int yearOfConstruction, PropertyType typeOfProperty, PropertyOwner owner) {
-
 
         return Property.builder()
                 .e9(e9)
@@ -62,7 +61,7 @@ public class PropertyServiceImpl implements PropertyService {
         return allProperties.stream()
                 .filter(property -> property.getPropertyOwner().getVatNumber().equals(ownerVat))
                 .collect(Collectors.toList());
-         
+
     }
 
     @Override
@@ -84,9 +83,9 @@ public class PropertyServiceImpl implements PropertyService {
         Optional<Property> property;
         List<Property> allProperties = propertyRepository.findAll();
         List<Property> e9Properties = allProperties.stream().filter(p -> p.getE9().equals(e9)).collect(Collectors.toList());
-        if (e9Properties.size() == 0){
+        if (e9Properties.size() == 0) {
             property = Optional.empty();
-        }else{
+        } else {
             property = Optional.of(e9Properties.get(0));
         }
         return property;
